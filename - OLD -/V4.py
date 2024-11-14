@@ -9,9 +9,9 @@ end_hour = "19:00"
 
 # Définir les événements avec les heures et les icônes associées
 events = [
-    {"time": "18:30", "icon_path": os.path.join("images", "dejeuner.png")},
-    {"time": "18:40", "icon_path": os.path.join("images", "brosse_dent.png")},
-    {"time": "18:50", "icon_path": os.path.join("images", "bus.webp")},
+    {"time": "18:30", "icon_path": os.path.join("../images", "dejeuner.png")},
+    {"time": "18:40", "icon_path": os.path.join("../images", "brosse_dent.png")},
+    {"time": "18:50", "icon_path": os.path.join("../images", "bus.webp")},
 ]
 # Créer start_time et end_time avec la date actuelle
 today = datetime.datetime.now().date()
@@ -48,7 +48,7 @@ canvas.create_text(bar_end_x, bar_y + 20, text=end_hour, anchor="w")
 pixels_per_minute = canvas_width / total_minutes
 
 # Charger l'icône en tant qu'indicateur de temps actuel
-icon_image = Image.open(os.path.join("images", "petite_fille.png"))
+icon_image = Image.open(os.path.join("../images", "petite_fille.png"))
 icon_image = icon_image.resize((80, 80), Image.LANCZOS)
 icon = ImageTk.PhotoImage(icon_image)
 

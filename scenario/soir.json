@@ -1,0 +1,14 @@
+{
+  "title": "Routine du soir",
+  "start_hour": "11:30",
+  "end_hour": "13:00",
+  "events": [
+    {"time": "11:50", "icon": "reveil.png"},
+    {"time": "12:00", "icon": "dejeuner.png"},
+    {"time": "12:10", "icon": "robe.png"},
+    {"time": "12:15", "icon": "dent.png"},
+    {"time": "12:17", "icon": "brosse.png"},
+    {"time": "12:30", "icon": "mitaine.png"},
+    {"time": "12:40", "icon": "bus.webp"}
+  ]
+}
