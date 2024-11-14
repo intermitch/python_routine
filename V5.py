@@ -1,20 +1,25 @@
 import os
+import sys
 import tkinter as tk
 from PIL import Image, ImageTk
 import datetime
 
 # Variables pour le choix de l'heure de début et de l'heure de fin
-start_hour =     "18:30"    #6:30
-end_hour =       "20:00"    #8:00
+start_hour =     "20:30"    #6:30
+end_hour =       "22:00"    #8:00
 # Définir les événements avec les heures et les icônes associées
-events = [
-    {"time": "18:50", "icon_path": os.path.join("images", "reveil.png")},           #6:50
-    {"time": "19:00", "icon_path": os.path.join("images", "dejeuner.png")},         #7:00
-    {"time": "19:15", "icon_path": os.path.join("images", "dent.png")},      #7:15
-    {"time": "19:30", "icon_path": os.path.join("images", "mitaine.png")},          #7:30
-    {"time": "19:40", "icon_path": os.path.join("images", "bus.webp")},             #7:40
-]
 
+script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
+
+events = [
+    {"time": "20:50", "icon_path": os.path.join(script_dir, "./images/reveil.png")},           #6:50
+    {"time": "21:00", "icon_path": os.path.join(script_dir, "./images/dejeuner.png")},         #7:00
+    {"time": "21:10", "icon_path": os.path.join(script_dir, "./images/robe.png")},             #7:10
+    {"time": "21:15", "icon_path": os.path.join(script_dir, "./images/dent.png")},             #7:15
+    {"time": "21:17", "icon_path": os.path.join(script_dir, "./images/brosse.png")},           #7:17
+    {"time": "21:30", "icon_path": os.path.join(script_dir, "./images/mitaine.png")},          #7:30
+    {"time": "21:40", "icon_path": os.path.join(script_dir, "./images/bus.webp")},             #7:40
+]
 # Créer start_time et end_time avec la date actuelle
 today = datetime.datetime.now().date()
 start_time = datetime.datetime.combine(today, datetime.datetime.strptime(start_hour, "%H:%M").time())
@@ -67,11 +72,11 @@ def add_event_icon(event_time_str, icon_path):
 
         # Charger l'icône de l'événement
         event_icon_image = Image.open(icon_path)
-        event_icon_image = event_icon_image.resize((100, 100), Image.LANCZOS)  # Redimensionner l'icône de l'événement
+        event_icon_image = event_icon_image.resize((50, 50), Image.LANCZOS)  # Redimensionner l'icône de l'événement
         event_icon = ImageTk.PhotoImage(event_icon_image)
 
         # Afficher l'icône de l'événement sur la ligne de temps
-        icon_id = canvas.create_image(x_position, bar_y, image=event_icon, anchor="center")
+        icon_id = canvas.create_image(x_position, bar_y-80, image=event_icon, anchor="center")
         event_icons.append(event_icon)  # Ajouter l'icône dans la liste pour éviter le garbage collection
         event_positions.append((x_position, event_time))  # Ajouter la position et l'heure de l'événement
 
@@ -84,7 +89,7 @@ for event in events:
     add_event_icon(event["time"], event["icon_path"])
 
 # Charger l'icône en tant qu'indicateur de temps actuel
-icon_image = Image.open(os.path.join("images", "petite_fille.png"))
+icon_image = Image.open(os.path.join(script_dir, "./images/petite_fille.png"))
 icon_image = icon_image.resize((80, 80), Image.LANCZOS)
 icon = ImageTk.PhotoImage(icon_image)
 
@@ -107,12 +112,12 @@ def update_indicator():
             # Calculer l'écart en minutes entre l'heure actuelle et l'événement
             time_difference = abs((now_time - event_time).total_seconds() / 60)
 
-            # Si l'heure actuelle est dans la fenêtre de 5 minutes avant ou après l'événement
-            if time_difference <= 5:
+            # Si l'heure actuelle est dans la fenêtre de 2 minutes avant ou après l'événement
+            if time_difference <= 2:
                 # Ajouter un cadre rouge autour de l'icône de l'événement si ce n'est pas déjà fait
                 if len(event_frames) <= i or not event_frames[i]:
                     frame = canvas.create_rectangle(
-                        event_x - 50, bar_y - 50, event_x + 50, bar_y + 50, outline="red", width=2
+                        event_x - 30, bar_y - 30 - 80, event_x + 30, bar_y + 30 - 80 , outline="red", width=2
                     )
                     if len(event_frames) > i:
                         event_frames[i] = frame
