@@ -96,11 +96,18 @@ def add_event_icon(event_time_str, icon_path):
         event_positions.append((x_position, event_time))
 
         # Afficher l'heure sous l'icône de l'événement
-        canvas.create_text(x_position, bar_y + 50, text=event_time_str, anchor="n")
+        if event_id%2 == 0:
+            pos_y_mod = 0
+        else:
+            pos_y_mod = 20
+        print(pos_y_mod)
+        canvas.create_text(x_position, bar_y + 50-pos_y_mod, text=event_time_str, anchor="n")
 
 # Ajouter chaque événement défini dans la liste `events`
+event_id=1
 for event in events:
     add_event_icon(event["time"], event["icon_path"])
+    event_id+=1
 
 # Charger l'icône en tant qu'indicateur de temps actuel
 icon_image = Image.open(os.path.join(script_dir, "./images/petite_fille.png"))
