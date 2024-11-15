@@ -2,6 +2,9 @@
   "title": "Routine du soir",
   "start_hour": "15:30",
   "end_hour": "20:00",
+  "indicators": [
+    {"time": "11:50", "icon": "petite_fille.png"}
+  ],
   "events": [
     {"time": "15:30", "icon": "ranger_vetements.png"},
     {"time": "15:38", "icon": "collation.png"},
