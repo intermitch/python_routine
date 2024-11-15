@@ -1,14 +1,18 @@
 {
   "title": "Routine du soir",
-  "start_hour": "11:30",
-  "end_hour": "13:00",
+  "start_hour": "15:30",
+  "end_hour": "20:00",
   "events": [
-    {"time": "11:50", "icon": "reveil.png"},
-    {"time": "12:00", "icon": "dejeuner.png"},
-    {"time": "12:10", "icon": "robe.png"},
-    {"time": "12:15", "icon": "dent.png"},
-    {"time": "12:17", "icon": "brosse.png"},
-    {"time": "12:30", "icon": "mitaine.png"},
-    {"time": "12:40", "icon": "bus.webp"}
+    {"time": "15:30", "icon": "ranger_vetements.png"},
+    {"time": "15:38", "icon": "collation.png"},
+    {"time": "15:45", "icon": "devoirs.png"},
+    {"time": "16:00", "icon": "sac_ecole.png"},
+    {"time": "17:30", "icon": "souper.png"},
+    {"time": "18:00", "icon": "bain.png"},
+    {"time": "18:30", "icon": "preparer_vetements.jpg"},
+    {"time": "19:10", "icon": "pyjama.jpg"},
+    {"time": "19:15", "icon": "biscuits.png"},
+    {"time": "19:20", "icon": "brosse_dent.png"},
+    {"time": "19:30", "icon": "lecture_lit.webp"}
   ]
 }
