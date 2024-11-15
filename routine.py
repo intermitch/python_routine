@@ -1,36 +1,41 @@
 import os
 import sys
-import json
 import tkinter as tk
 from PIL import Image, ImageTk
 import datetime
+import argparse
+
+from libs import data
 
 # Vérifier si un fichier d'événements a été fourni en argument
 if len(sys.argv) < 2:
     print("Usage: python monFichier.py <events_file.json>")
     sys.exit(1)
 
+# Configurer le parser
+parser = argparse.ArgumentParser(description="Script pour gérer le mode plein écran.")
+parser.add_argument(
+    "filename",
+    type=str,
+    help="Nom du fichier à traiter."
+)
+parser.add_argument(
+    "--nofullscreen",
+    action="store_false",  # Si présent, la valeur sera False
+    dest="fullscreen",  # La variable résultante sera `args.fullscreen`
+    help="Désactiver le mode plein écran."
+)
+# Définir `fullscreen` comme activé par défaut
+parser.set_defaults(fullscreen=True)
+# Parser les arguments
+args = parser.parse_args()
+
 # Chemin du dossier du script
-script_dir = os.path.dirname(__file__)
-scenario_dir = os.path.join(script_dir, "scenario")
+scenario_dir = os.path.join(os.path.dirname(__file__), "scenario")
 events_file = os.path.join(scenario_dir, sys.argv[1] + ".json")
 
-# Charger les événements, le titre, l'heure de début et de fin depuis le fichier JSON
-def load_data(file_path):
-    with open(file_path, "r", encoding="utf-8") as f:  # Utiliser l'encodage UTF-8
-        data = json.load(f)
-    # Ajouter le chemin complet pour chaque icône
-    events_data = data.get("events", [])
-    for event in events_data:
-        event["icon_path"] = os.path.join(script_dir, "images", event["icon"])
-    # Extraire le titre, l'heure de début et de fin
-    title = data.get("title", "Titre")
-    start_hour = data.get("start_hour", "00:00")
-    end_hour = data.get("end_hour", "23:59")
-    return title, start_hour, end_hour, events_data
-
 # Charger les données
-title, start_hour, end_hour, events = load_data(events_file)
+title, start_hour, end_hour, events, indicators = data.load_data(events_file)
 
 # Créer start_time et end_time avec la date actuelle
 today = datetime.datetime.now().date()
@@ -41,7 +46,8 @@ total_minutes = int((end_time - start_time).total_seconds() / 60)
 # Initialiser la fenêtre Tkinter en plein écran
 root = tk.Tk()
 root.title("Ligne du temps en plein écran")
-root.attributes("-fullscreen", True)
+if args.fullscreen:
+    root.attributes("-fullscreen", True)
 
 # Obtenir les dimensions de l'écran
 screen_width = root.winfo_screenwidth()
@@ -103,10 +109,33 @@ for event in events:
     add_event_icon(event["time"], event["icon_path"])
 
 # Charger l'icône en tant qu'indicateur de temps actuel
-icon_image = Image.open(os.path.join(script_dir, "./images/petite_fille.png"))
-icon_image = icon_image.resize((80, 80), Image.LANCZOS)
-icon = ImageTk.PhotoImage(icon_image)
-icon_indicator = canvas.create_image(bar_start_x, bar_y, image=icon, anchor="center")
+
+def add_indicator_icon(indicators):
+    icon_image = Image.open(os.path.join(os.path.dirname(__file__), indicators[0]["icon_path"]))
+    icon_image = icon_image.resize((80, 80), Image.LANCZOS)
+    icon = ImageTk.PhotoImage(icon_image)
+    # Attacher `icon` à l'objet canvas
+    if not hasattr(canvas, "image_references"):
+        canvas.image_references = []  # Créer une liste d'images si elle n'existe pas
+    canvas.image_references.append(icon)
+    return canvas.create_image(bar_start_x, bar_y, image=icon, anchor="center")
+
+def update_indicator_icon(canvas_item, new_image_path):
+    # Charger et redimensionner la nouvelle image
+    icon_image = Image.open(new_image_path)
+    icon_image = icon_image.resize((80, 80), Image.LANCZOS)
+    new_icon = ImageTk.PhotoImage(icon_image)
+
+    # Attacher la nouvelle image au canvas pour éviter le garbage collection
+    if not hasattr(canvas, "image_references"):
+        canvas.image_references = []
+    canvas.image_references.append(new_icon)
+
+    # Mettre à jour l'image du canvas_item
+    canvas.itemconfig(canvas_item, image=new_icon)
+
+#crée l'indicator de début
+icon_indicator = add_indicator_icon(indicators)
 
 # Afficher l'heure actuelle au centre en bas de l'écran
 current_time_text = canvas.create_text(
@@ -120,6 +149,13 @@ def update_indicator():
 
     # Mettre à jour l'affichage de l'heure actuelle
     canvas.itemconfig(current_time_text, text=now.strftime("%H:%M:%S"))
+
+
+    #Modification de l'indicateur
+    resultats = [indicator for indicator in reversed(indicators) if
+                 datetime.datetime.combine(today, datetime.datetime.strptime(indicator["time"], "%H:%M").time()) <= now_time]
+
+    update_indicator_icon(icon_indicator, resultats[0]["icon_path"])
 
     if start_time <= now_time <= end_time:
         elapsed_minutes = (now_time - start_time).total_seconds() / 60
@@ -141,6 +177,7 @@ def update_indicator():
                 if len(event_frames) > i and event_frames[i]:
                     canvas.delete(event_frames[i])
                     event_frames[i] = None
+
 
     root.after(1000, update_indicator)
 
