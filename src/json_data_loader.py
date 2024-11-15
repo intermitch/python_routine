@@ -13,6 +13,8 @@ class JsonDataLoader:
         with open(self.filepath, "r", encoding="utf-8") as f:
             data = json.load(f)
 
+        users_data = data.get("users", [])
+
         events_data = data.get("events", [])
         for event in events_data:
             event["icon_path"] = os.path.join(project_root, "images", event["icon"])
@@ -30,5 +32,6 @@ class JsonDataLoader:
             "start_hour": start_hour,
             "end_hour": end_hour,
             "events": events_data,
+            "users": users_data,
             "indicators": indicators_data
         }

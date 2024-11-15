@@ -2,6 +2,10 @@
   "title": "Routine de test",
   "start_hour": "13:45",
   "end_hour": "16:00",
+  "users": [
+    {"name": "Olivia"},
+    {"name": "Dahlia"}
+  ],
   "indicators": [
     {"time": "12:50", "icon": "petite_fille.png"}
   ],

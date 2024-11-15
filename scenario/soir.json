@@ -2,6 +2,10 @@
   "title": "Routine du soir",
   "start_hour": "15:30",
   "end_hour": "20:00",
+  "users": [
+    {"name": "Olivia"},
+    {"name": "Dahlia"}
+  ],
   "indicators": [
     {"time": "11:50", "icon": "petite_fille.png"}
   ],
