@@ -1,6 +1,6 @@
 {
   "title": "Routine de test",
-  "start_hour": "13:45",
+  "start_hour": "15:15",
   "end_hour": "16:00",
   "users": [
     {"name": "Olivia"},
@@ -10,10 +10,6 @@
     {"time": "12:50", "icon": "petite_fille.png"}
   ],
   "events": [
-    {"time": "13:50", "icon": "reveil.png"},
-    {"time": "14:20", "icon": "dejeuner.png"},
-    {"time": "14:30", "icon": "robe.png"},
-    {"time": "14:40", "icon": "dent.png"},
     {"time": "15:24", "icon": "brosse.png"},
     {"time": "15:25", "icon": "sac_ecole.png"},
     {"time": "15:40", "icon": "mitaine.png"},

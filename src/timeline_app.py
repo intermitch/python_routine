@@ -3,6 +3,7 @@ import datetime
 
 from src.json_data_loader import JsonDataLoader
 from src.event_manager import EventManager
+from src.button_manager import ButtonManager
 
 
 class TimelineApp:
@@ -52,6 +53,7 @@ class TimelineApp:
         self.event_buttons = []
         self.button_states = []  # Suivi de l'état des boutons : True pour vert, False pour rouge
         self.user_names = [user['name'] for user in self.users]  # Noms d'utilisateurs
+        self.button_positions = []
 
     def update_indicator(self):
         now = datetime.datetime.now()
@@ -59,9 +61,11 @@ class TimelineApp:
 
         self.canvas.itemconfig(self.current_time_text, text=now.strftime("%H:%M:%S"))
 
-        resultats = [indicator for indicator in reversed(self.indicators) if
-                     datetime.datetime.combine(self.today, datetime.datetime.strptime(indicator["time"],
-                                                                                      "%H:%M").time()) <= now_time]
+        resultats = [
+                        indicator for indicator in reversed(self.indicators)
+                        if datetime.datetime.combine(self.today, datetime.datetime.strptime(indicator["time"],
+                                                                                            "%H:%M").time()) <= now_time
+                    ] or [self.indicators[-1]]
 
         self.event_manager.update_event_frames(now_time)
         self.event_manager.update_indicator_icon(self.icon_indicator, resultats[0]["icon_path"])
@@ -101,47 +105,27 @@ class TimelineApp:
     def create_buttons(self):
         """Créer les boutons sous les événements pour chaque utilisateur"""
         y_offset = 100  # Décalage vertical pour la ligne des boutons principaux
-        button_y_offset = 60  # Décalage pour les lignes supplémentaires (utilisateurs)
+        button_y_offset = 120  # Décalage pour les lignes supplémentaires (utilisateurs)
         self.event_buttons = []  # Réinitialiser les boutons
         self.button_states = []  # Réinitialiser l'état des boutons
         self.green_text = []  # Réinitialiser les éléments de texte pour le nombre de boutons verts
 
-        for user_idx in range(self.num_users):
-            user_buttons = []
-            for event_idx, event in enumerate(self.events):
-                # Calculer la position X de chaque bouton en fonction de l'événement
-                event_time = datetime.datetime.combine(self.today,
-                                                       datetime.datetime.strptime(event["time"], "%H:%M").time())
-                elapsed_minutes = (event_time - self.start_time).total_seconds() / 60
-                x_position = self.bar_start_x + elapsed_minutes * self.pixels_per_minute
-
-                # Créer le bouton rouge sous l'événement pour chaque utilisateur
-                button = tk.Button(self.root, text=" ", width=5, height=1, bg="red",
-                                   command=lambda u_idx=user_idx, e_idx=event_idx: self.toggle_button(u_idx, e_idx))
-                button.place(x=x_position - 25,
-                             y=self.bar_y + y_offset + user_idx * button_y_offset)  # Placer le bouton sous l'événement
-                user_buttons.append(button)
-
-                if len(self.button_states) <= user_idx:
-                    self.button_states.append([])  # Ajouter une liste pour cet utilisateur
-                self.button_states[user_idx].append(False)  # Initialement rouge
-
-            self.event_buttons.append(user_buttons)
-
-            # Afficher le nom de l'utilisateur dans la première colonne
-            self.canvas.create_text(self.bar_start_x - 80, self.bar_y + y_offset + user_idx * button_y_offset,
-                                    text=self.user_names[user_idx], anchor="e", font=("Helvetica", 12))
-
-            # Calculer le nombre de boutons verts
-            green_count = sum(1 for state in self.button_states[user_idx] if state)
-            total_count = len(self.button_states[user_idx])
-            green_percentage = f"{green_count}/{total_count}"
-
-            # Afficher le nombre de boutons verts/total à la fin de la ligne de l'utilisateur
-            green_text = self.canvas.create_text(self.bar_end_x + 80,
-                                                 self.bar_y + y_offset + user_idx * button_y_offset,
-                                                 text=green_percentage, anchor="w", font=("Helvetica", 12))
-            self.green_text.append(green_text)  # Sauvegarder la référence pour mise à jour
+        #button_manager = ButtonManager(self.root, self.canvas, self.bar_y, y_offset, button_y_offset, self.bar_start_x, self.pixels_per_minute, self.start_time, self.button_positions, self.button_states, self.events, self.users)
+        button_manager = ButtonManager(
+            self.root,
+            self.canvas,
+            self.bar_y,
+            y_offset,
+            button_y_offset,
+            self.bar_start_x,
+            self.pixels_per_minute,
+            self.start_time,
+            self.button_positions,
+            self.button_states,
+            self.events,
+            self.users
+        )
+        self.event_buttons, self.button_states, self.green_text = button_manager.create_buttons(self.toggle_button)
 
     def run(self):
         self.canvas.create_text(
