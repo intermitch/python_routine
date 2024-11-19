@@ -118,6 +118,7 @@ class TimelineApp:
             y_offset,
             button_y_offset,
             self.bar_start_x,
+            self.bar_end_x,
             self.pixels_per_minute,
             self.start_time,
             self.button_positions,

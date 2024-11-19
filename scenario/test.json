@@ -1,13 +1,13 @@
 {
   "title": "Routine de test",
-  "start_hour": "15:15",
-  "end_hour": "16:00",
+  "start_hour": "16:40",
+  "end_hour": "17:30",
   "users": [
     {"name": "Olivia"},
     {"name": "Dahlia"}
   ],
   "indicators": [
-    {"time": "12:50", "icon": "petite_fille.png"}
+    {"time": "16:40", "icon": "petite_fille_levee.webp"}
   ],
   "events": [
     {"time": "15:24", "icon": "brosse.png"},

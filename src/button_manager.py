@@ -2,13 +2,14 @@ import tkinter as tk
 import datetime
 
 class ButtonManager:
-    def __init__(self, root, canvas, bar_y, y_offset, button_y_offset, bar_start_x, pixels_per_minute, start_time, button_positions, button_states, events, users):
+    def __init__(self, root, canvas, bar_y, y_offset, button_y_offset, bar_start_x, bar_end_x, pixels_per_minute, start_time, button_positions, button_states, events, users):
         self.root = root
         self.canvas = canvas
         self.bar_y = bar_y
         self.y_offset = y_offset
         self.button_y_offset = button_y_offset
         self.bar_start_x = bar_start_x
+        self.bar_end_x = bar_end_x
         self.pixels_per_minute = pixels_per_minute
         self.start_time = start_time
         self.button_positions = button_positions
@@ -36,13 +37,13 @@ class ButtonManager:
                 button = tk.Button(self.root, text=" ", width=5, height=1, bg="red",
                                    command=lambda u_idx=user_idx, e_idx=event_idx: toggle_callback(u_idx, e_idx))
 
-                # Décalage vertical du bouton si un événement précédent est proche
-                if len(self.button_positions) > 1 and (
-                        event_time - self.button_positions[-2][1]).total_seconds() <= 300:
-                    pos_y_mod = 0 if len(self.button_positions) % 2 == 0 else 30
-                else:
-                    pos_y_mod = 0
-
+            #    # Décalage vertical du bouton si un événement précédent est proche
+            #    if len(self.button_positions) > 1 and (
+            #            event_time - self.button_positions[-2][1]).total_seconds() <= 300:
+            #        pos_y_mod = 0 if len(self.button_positions) % 2 == 0 else 30
+            #    else:
+            #        pos_y_mod = 0
+                pos_y_mod = 0
                 self.button_positions.append((x_position, event_time))
                 button.place(x=x_position - 25,
                              y=self.bar_y + self.y_offset + user_idx * self.button_y_offset - pos_y_mod)  # Placer le bouton sous l'événement
@@ -63,7 +64,7 @@ class ButtonManager:
             green_percentage = f"{green_count}/{total_count}"
 
             # Afficher le nombre de boutons verts/total à la fin de la ligne de l'utilisateur
-            green_text_item = self.canvas.create_text(self.bar_start_x + len(self.events) * self.pixels_per_minute + 1800,
+            green_text_item = self.canvas.create_text(self.bar_end_x,
                                                       self.bar_y + self.y_offset + user_idx * self.button_y_offset,
                                                       text=green_percentage, anchor="w", font=("Helvetica", 12))
             green_text.append(green_text_item)  # Sauvegarder la référence pour mise à jour

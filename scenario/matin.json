@@ -7,14 +7,15 @@
     {"name": "Dahlia"}
   ],
   "indicators": [
+    {"time": "6:50", "icon": "petite_fille_levee.webp"},
     {"time": "6:50", "icon": "petite_fille.png"}
   ],
   "events": [
     {"time": "6:50", "icon": "reveil.png"},
     {"time": "7:00", "icon": "dejeuner.png"},
     {"time": "7:10", "icon": "robe.png"},
-    {"time": "7:12", "icon": "dent.png"},
-    {"time": "7:14", "icon": "brosse_dent.png"},
+    {"time": "7:12", "icon": "brosse_dent.png"},
+    {"time": "7:14", "icon": "brosse.png"},
     {"time": "7:25", "icon": "sac_ecole.png"},
     {"time": "7:30", "icon": "mitaine.png"},
     {"time": "7:40", "icon": "bus.webp"}

@@ -32,7 +32,7 @@ class EventManager:
             self.event_positions.append((x_position, event_time))
 
             pos_y_mod = 0 if len(self.event_positions) % 2 == 0 else 20
-            self.canvas.create_text(x_position, self.bar_y + 50 - pos_y_mod, text=event_time_str, anchor="n")
+            self.canvas.create_text(x_position, self.bar_y + 60 - pos_y_mod, text=event_time_str, anchor="n")
 
     def add_indicator_icon(self, icon_path):
         icon_image = Image.open(icon_path)
