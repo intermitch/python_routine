@@ -23,26 +23,51 @@ class EventManager:
             elapsed_minutes = (event_time - self.start_time).total_seconds() / 60
             x_position = self.bar_start_x + elapsed_minutes * self.pixels_per_minute
 
+            # Charger l'image (WebP ou autre format supporté)
             event_icon_image = Image.open(icon_path)
+
+            # Vérifier si l'image a un canal alpha, sinon le convertir
+            if event_icon_image.mode != "RGBA":
+                event_icon_image = event_icon_image.convert("RGBA")
+
+            # Redimensionner l'image
             event_icon_image = event_icon_image.resize((50, 50), Image.LANCZOS)
+
+            # Créer une version compatible avec Tkinter
             event_icon = ImageTk.PhotoImage(event_icon_image)
 
+            # Ajouter l'image à la Canvas
             icon_id = self.canvas.create_image(x_position, self.bar_y - 80, image=event_icon, anchor="center")
+
+            # Sauvegarder les références pour éviter le ramasse-miettes
             self.event_icons.append(event_icon)
             self.event_positions.append((x_position, event_time))
 
+            # Ajouter le texte associé
             pos_y_mod = 0 if len(self.event_positions) % 2 == 0 else 20
             self.canvas.create_text(x_position, self.bar_y + 60 - pos_y_mod, text=event_time_str, anchor="n")
 
     def add_indicator_icon(self, icon_path):
+        # Charger l'image (WebP ou tout autre format supporté)
         icon_image = Image.open(icon_path)
+
+        # Vérifier si l'image a un canal alpha, sinon le convertir en RGBA
+        if icon_image.mode != "RGBA":
+            print("test")
+            icon_image = icon_image.convert("RGBA")
+
+        # Redimensionner l'image
         icon_image = icon_image.resize((80, 80), Image.LANCZOS)
+
+        # Créer une version compatible avec Tkinter
         icon = ImageTk.PhotoImage(icon_image)
 
+        # Sauvegarder une référence pour empêcher le ramasse-miettes de supprimer l'image
         if not hasattr(self.canvas, "image_references"):
             self.canvas.image_references = []
         self.canvas.image_references.append(icon)
 
+        # Ajouter l'image à la Canvas
         return self.canvas.create_image(self.bar_start_x, self.bar_y, image=icon, anchor="center")
 
     def update_indicator_icon(self, canvas_item, new_image_path):

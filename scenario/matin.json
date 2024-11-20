@@ -7,8 +7,11 @@
     {"name": "Dahlia"}
   ],
   "indicators": [
-    {"time": "6:50", "icon": "petite_fille_levee.webp"},
-    {"time": "6:50", "icon": "petite_fille.png"}
+    {"time": "6:00", "icon": "petite_fille_baille.webp"},
+    {"time": "6:30", "icon": "petite_fille_levee.webp"},
+    {"time": "7:00", "icon": "petite_fille.png"},
+    {"time": "7:15", "icon": "petite_fille_ecole.png"},
+    {"time": "7:30", "icon": "petite_fille_hiver.webp"}
   ],
   "events": [
     {"time": "6:50", "icon": "reveil.png"},

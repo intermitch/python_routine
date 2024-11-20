@@ -7,7 +7,11 @@
     {"name": "Dahlia"}
   ],
   "indicators": [
-    {"time": "11:50", "icon": "petite_fille.png"}
+    {"time": "15:00", "icon": "petite_fille_hiver.webp"},
+    {"time": "15:35", "icon": "petite_fille_ecole.png"},
+    {"time": "18:00", "icon": "pyjama.jpg"},
+    {"time": "19:10", "icon": "petite_fille_levee.webp"},
+    {"time": "19:30", "icon": "petite_fille_baille.webp"}
   ],
   "events": [
     {"time": "15:30", "icon": "ranger_vetements.png"},
