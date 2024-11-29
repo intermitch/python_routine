@@ -8,3 +8,6 @@ if __name__ == "__main__":
 
     app = TimelineApp(events_file, fullscreen=fullscreen)
     app.run()
+
+
+#test audio
