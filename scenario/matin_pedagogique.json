@@ -1,14 +1,24 @@
 {
-  "title": "Routine du matin pédagogique",
-  "start_hour": "6:45",
-  "end_hour": "7:45",
+  "title": "Routine du matin",
+  "start_hour": "6:50",
+  "end_hour": "8:10",
+  "users": [
+    {"name": "Olivia"},
+    {"name": "Dahlia"}
+  ],
+  "indicators": [
+    {"time": "7:00", "icon": "petite_fille_baille.webp"},
+    {"time": "7:15", "icon": "petite_fille_levee.webp"},
+    {"time": "7:25", "icon": "petite_fille.png"},
+    {"time": "7:30", "icon": "petite_fille_ecole.png"},
+    {"time": "7:50", "icon": "petite_fille_hiver.webp"}
+  ],
   "events": [
-    {"time": "6:50", "icon": "reveil.png"},
-    {"time": "7:00", "icon": "dejeuner.png"},
-    {"time": "7:10", "icon": "robe.png"},
-    {"time": "7:12", "icon": "dent.png"},
-    {"time": "7:14", "icon": "brosse.png"},
-    {"time": "7:45", "icon": "sac_ecole.png"},
+    {"time": "7:00", "icon": "reveil.png"},
+    {"time": "7:15", "icon": "dejeuner.png"},
+    {"time": "7:25", "icon": "robe.png"},
+    {"time": "7:27", "icon": "brosse_dent.png"},
+    {"time": "7:29", "icon": "brosse.png"},
     {"time": "7:50", "icon": "mitaine.png"},
     {"time": "8:00", "icon": "voiture.png"}
   ]

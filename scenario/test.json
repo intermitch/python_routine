@@ -1,18 +1,22 @@
 {
   "title": "Routine de test",
-  "start_hour": "20:00",
+  "start_hour": "19:00",
   "end_hour": "21:00",
   "users": [
     {"name": "Olivia"},
     {"name": "Dahlia"}
   ],
   "indicators": [
-    {"time": "20:00", "icon": "petite_fille_baille.webp"}
+    {"time": "19:00", "icon": "petite_fille_baille.webp"},
+    {"time": "19:50", "icon": "petite_fille_levee.webp"},
+    {"time": "19:00", "icon": "petite_fille.png"},
+    {"time": "19:11", "icon": "petite_fille_ecole.png"},
+    {"time": "20:30", "icon": "petite_fille_hiver.webp"}
   ],
   "events": [
-    {"time": "15:24", "icon": "brosse.png"},
-    {"time": "15:25", "icon": "sac_ecole.png"},
-    {"time": "15:40", "icon": "mitaine.png"},
-    {"time": "15:50", "icon": "bus.webp"}
+    {"time": "19:24", "icon": "brosse.png"},
+    {"time": "19:25", "icon": "sac_ecole.png"},
+    {"time": "20:40", "icon": "mitaine.png"},
+    {"time": "20:50", "icon": "bus.webp"}
   ]
 }
