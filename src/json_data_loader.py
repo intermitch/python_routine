@@ -23,6 +23,10 @@ class JsonDataLoader:
         for indicator in indicators_data:
             indicator["icon_path"] = os.path.join(project_root, "images", indicator["icon"])
 
+        sounds_data = data.get("sounds", [])
+        for sound in sounds_data:
+            sound["sound_path"] = os.path.join(project_root, "sounds", sound["file"])
+
         title = data.get("title", "Titre")
         start_hour = data.get("start_hour", "00:00")
         end_hour = data.get("end_hour", "23:59")
@@ -33,5 +37,6 @@ class JsonDataLoader:
             "end_hour": end_hour,
             "events": events_data,
             "users": users_data,
+            "sounds": sounds_data,
             "indicators": indicators_data
         }

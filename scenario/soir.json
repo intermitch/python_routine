@@ -25,5 +25,9 @@
     {"time": "19:15", "icon": "biscuits.png"},
     {"time": "19:20", "icon": "brosse_dent.png"},
     {"time": "19:30", "icon": "lecture_lit.webp"}
+  ],
+  "sounds": [
+    {"type": "button", "file": "click-47609.mp3"},
+    {"type": "completion", "file": "applause-cheer.mp3"}
   ]
 }

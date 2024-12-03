@@ -22,5 +22,9 @@
     {"time": "7:25", "icon": "sac_ecole.png"},
     {"time": "7:30", "icon": "mitaine.png"},
     {"time": "7:40", "icon": "bus.webp"}
+  ],
+  "sounds": [
+    {"type": "button", "file": "click-47609.mp3"},
+    {"type": "completion", "file": "applause-cheer.mp3"}
   ]
 }

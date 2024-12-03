@@ -1,6 +1,8 @@
 import tkinter as tk
 import datetime
 
+from pygame import mixer
+
 from src.json_data_loader import JsonDataLoader
 from src.event_manager import EventManager
 from src.button_manager import ButtonManager
@@ -91,13 +93,29 @@ class TimelineApp:
             self.button_states[user_idx][event_idx] = True
 
         # Mettre à jour le texte affichant le nombre de boutons verts/total
-        self.update_green_count(user_idx)
+        self.update_completion(user_idx)
 
-    def update_green_count(self, user_idx):
+    def update_completion(self, user_idx):
         """Met à jour le texte affichant le nombre de boutons verts/total pour un utilisateur donné"""
         green_count = sum(1 for state in self.button_states[user_idx] if state)
         total_count = len(self.button_states[user_idx])
         green_percentage = f"{green_count}/{total_count}"
+
+        if green_count/total_count == 1:
+
+            # Initialiser le lecteur de son
+            mixer.init()
+
+            print("Réussite")
+            button_sound_path = self.load_sounds().get('completion')
+            print(button_sound_path)
+            # Jouer le son si disponible
+            if self.load_sounds():
+                try:
+                    mixer.music.load(button_sound_path)
+                    mixer.music.play()
+                except Exception as e:
+                    print(f"Erreur lors de la lecture du son : {e}")
 
         # Mettre à jour le texte de la colonne des boutons verts/total
         self.canvas.itemconfig(self.green_text[user_idx], text=green_percentage)
@@ -109,6 +127,9 @@ class TimelineApp:
         self.event_buttons = []  # Réinitialiser les boutons
         self.button_states = []  # Réinitialiser l'état des boutons
         self.green_text = []  # Réinitialiser les éléments de texte pour le nombre de boutons verts
+
+        # Charger les sons associés aux événements
+        sounds = self.load_sounds()
 
         #button_manager = ButtonManager(self.root, self.canvas, self.bar_y, y_offset, button_y_offset, self.bar_start_x, self.pixels_per_minute, self.start_time, self.button_positions, self.button_states, self.events, self.users)
         button_manager = ButtonManager(
@@ -126,7 +147,22 @@ class TimelineApp:
             self.events,
             self.users
         )
-        self.event_buttons, self.button_states, self.green_text = button_manager.create_buttons(self.toggle_button)
+        self.event_buttons, self.button_states, self.green_text = button_manager.create_buttons(self.toggle_button, sounds)
+
+    def load_sounds(self):
+        """
+        Charger les sons associés depuis la section 'sound' du fichier JSON.
+        Retourne un dictionnaire avec les types de sons comme clés et leurs chemins complets comme valeurs.
+        """
+        sounds = {}
+        for sound in self.data_loader.data.get("sounds", []):  # Utilise la clé 'sounds' corrigée
+            if "type" in sound and "sound_path" in sound:  # Vérifie que les clés existent
+                sounds[sound["type"]] = sound["sound_path"]
+            else:
+                print(f"Entrée de son invalide dans le JSON : {sound}")
+
+        #print("Sons chargés :", sounds)  # Affiche les sons chargés pour le débogage
+        return sounds
 
     def run(self):
         self.canvas.create_text(

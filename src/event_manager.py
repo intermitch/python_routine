@@ -53,7 +53,6 @@ class EventManager:
 
         # Vérifier si l'image a un canal alpha, sinon le convertir en RGBA
         if icon_image.mode != "RGBA":
-            print("test")
             icon_image = icon_image.convert("RGBA")
 
         # Redimensionner l'image

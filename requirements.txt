@@ -1,1 +1,4 @@
 pip install pillow
+pip install pygame
+python.exe -m pip install --upgrade pip
+
