@@ -7,7 +7,7 @@
     {"name": "Dahlia"}
   ],
   "indicators": [
-    {"time": "10:00", "icon": "petite_fille_baille.webp"}
+    {"time": "20:00", "icon": "petite_fille_baille.webp"}
   ],
   "events": [
     {"time": "10:24", "icon": "brosse.png"},
@@ -17,7 +17,8 @@
   ],
   "daily_events": [
     {"day": "Monday", "icon": "brosse.png", "description": "Activité pour lundi"},
-    {"day": "Tuesday", "icon": "brosse.png", "description": "Activité pour mardi"}
+    {"day": "Tuesday", "icon": "brosse.png", "description": "Activité pour mardi"},
+    {"day": "Wednesday", "icon": "brosse.png", "description": "Activité pour mardi"}
   ],
   "sounds": [
     {"type": "button", "file": "click-47609.mp3"},
