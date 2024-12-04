@@ -6,6 +6,7 @@ from pygame import mixer
 from src.json_data_loader import JsonDataLoader
 from src.event_manager import EventManager
 from src.button_manager import ButtonManager
+from PIL import Image, ImageTk
 
 
 class TimelineApp:
@@ -56,6 +57,35 @@ class TimelineApp:
         self.button_states = []  # Suivi de l'état des boutons : True pour vert, False pour rouge
         self.user_names = [user['name'] for user in self.users]  # Noms d'utilisateurs
         self.button_positions = []
+
+
+    def run(self):
+        self.canvas.create_text(
+            self.screen_width // 2, 50, text=self.title, font=("Helvetica", 48), anchor="center"
+        )
+
+        # Création de la timeline
+        self.canvas.create_line(self.bar_start_x, self.bar_y, self.bar_end_x, self.bar_y, fill="black", width=5)
+        self.canvas.create_text(self.bar_start_x, self.bar_y + 20, text=self.start_hour, anchor="e")
+        self.canvas.create_text(self.bar_end_x, self.bar_y + 20, text=self.end_hour, anchor="w")
+
+        self.event_manager.add_all_event_icons()
+
+        self.icon_indicator = self.event_manager.add_indicator_icon(self.indicators[0]["icon_path"])
+        self.current_time_text = self.canvas.create_text(self.screen_width // 2, self.screen_height - 50, text="",
+                                                         font=("Helvetica", 48), anchor="center")
+
+        # Appeler la méthode pour créer les boutons sous chaque événement pour chaque utilisateur
+        self.create_buttons()
+
+        # Appeler la méthode pour afficher l'événement quotidien
+        self.display_daily_event()
+
+        self.root.bind("<Escape>", self.exit_fullscreen)
+
+        self.update_indicator()
+
+        self.root.mainloop()
 
     def update_indicator(self):
         now = datetime.datetime.now()
@@ -164,27 +194,42 @@ class TimelineApp:
         #print("Sons chargés :", sounds)  # Affiche les sons chargés pour le débogage
         return sounds
 
-    def run(self):
-        self.canvas.create_text(
-            self.screen_width // 2, 50, text=self.title, font=("Helvetica", 48), anchor="center"
-        )
+    def display_daily_event(self):
+        """
+        Affiche un événement quotidien dans un carré en haut à droite.
+        """
+        #today = datetime.now().strftime("%A")  # Obtenir le jour de la semaine
+        today = datetime.datetime.now().strftime("%A")
 
-        # Création de la timeline
-        self.canvas.create_line(self.bar_start_x, self.bar_y, self.bar_end_x, self.bar_y, fill="black", width=5)
-        self.canvas.create_text(self.bar_start_x, self.bar_y + 20, text=self.start_hour, anchor="e")
-        self.canvas.create_text(self.bar_end_x, self.bar_y + 20, text=self.end_hour, anchor="w")
+        daily_events = self.data_loader.data["daily_events"]
+        event = daily_events.get(today, None)
 
-        self.event_manager.add_all_event_icons()
+        # Si un événement est trouvé, afficher son icône et sa description
+        if event:
+            icon_path = event.get("icon_path")
+            description = event.get("description", "")
 
-        self.icon_indicator = self.event_manager.add_indicator_icon(self.indicators[0]["icon_path"])
-        self.current_time_text = self.canvas.create_text(self.screen_width // 2, self.screen_height - 50, text="",
-                                                         font=("Helvetica", 48), anchor="center")
+            # Charger l'icône
+            if icon_path:
+                icon_image = Image.open(icon_path)
+                icon_image = icon_image.resize((100, 100), Image.LANCZOS)
+                icon_photo = ImageTk.PhotoImage(icon_image)
 
-        # Appeler la méthode pour créer les boutons sous chaque événement pour chaque utilisateur
-        self.create_buttons()
+                # Ajouter un rectangle
+                self.canvas.create_rectangle(
+                    self.screen_width - 300, 20, self.screen_width - 20, 300, fill="lightgray", outline="black"
+                )
+                # Ajouter l'icône
+                self.canvas.create_image(
+                    self.screen_width - 90, 60, image=icon_photo, anchor="center"
+                )
 
-        self.root.bind("<Escape>", self.exit_fullscreen)
+                # Sauvegarder l'image pour éviter que le ramasse-miettes ne la supprime
+                if not hasattr(self, "image_references"):
+                    self.image_references = []
+                self.image_references.append(icon_photo)
 
-        self.update_indicator()
-
-        self.root.mainloop()
+            # Ajouter le texte
+            self.canvas.create_text(
+                self.screen_width - 90, 120, text=description, font=("Helvetica", 12), anchor="center"
+            )

@@ -15,6 +15,10 @@
     {"time": "11:40", "icon": "mitaine.png"},
     {"time": "11:50", "icon": "bus.webp"}
   ],
+  "daily_events": [
+    {"day": "Monday", "icon": "brosse.png", "description": "Activité pour lundi"},
+    {"day": "Tuesday", "icon": "brosse.png", "description": "Activité pour mardi"}
+  ],
   "sounds": [
     {"type": "button", "file": "click-47609.mp3"},
     {"type": "completion", "file": "applause-cheer.mp3"}
