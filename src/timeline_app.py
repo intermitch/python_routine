@@ -230,12 +230,12 @@ class TimelineApp:
 
             # Ajouter un rectangle (le fond du carré)
             self.canvas.create_rectangle(
-                self.screen_width - 300, 20, self.screen_width - 20, 300, fill="lightgray", outline="black"
+                self.screen_width - 300, 20, self.screen_width - 20, 300, fill="yellow", outline="black"
             )
 
             # Ajouter un titre en gras centré en haut du carré
             self.canvas.create_text(
-                self.screen_width - 160, 40, text=f"Événement du jour",
+                self.screen_width - 160, 40, text=f"Défi",
                 font=("Helvetica", 16, "bold"), anchor="center"
             )
 

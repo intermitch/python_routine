@@ -27,9 +27,9 @@
     {"time": "19:30", "icon": "lecture_lit.webp"}
   ],
   "daily_events": [
-    {"day": "Tuesday", "icon": "daily_events/menage_chambre.webp", "description": "Ménage de la chambre"},
-    {"day": "Wednesday", "icon": "daily_events/rangement_soussol.webp", "description": "Rangement du sous-sol"},
-    {"day": "Thursday", "icon": "daily_events/rangement_vetement.webp", "description": "Rangement de ses vêtements"}
+    {"day": "Tuesday", "icon": "daily_events/menage_chambre.webp", "description": "Ménage de sa chambre"},
+    {"day": "Wednesday", "icon": "daily_events/rangement_soussol.webp", "description": "Ranger le sous-sol"},
+    {"day": "Thursday", "icon": "daily_events/rangement_vetement.webp", "description": "Ranger ses vêtements"}
   ],
   "daily_events_random": [
     {"icon": "daily_events/bricolage.webp", "description": "Faire un bricolage"},
