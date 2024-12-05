@@ -1,11 +1,15 @@
+import os
+import random
 import tkinter as tk
 import datetime
+from pathlib import Path
 
 from pygame import mixer
 
 from src.json_data_loader import JsonDataLoader
 from src.event_manager import EventManager
 from src.button_manager import ButtonManager
+from PIL import Image, ImageTk
 
 
 class TimelineApp:
@@ -56,6 +60,35 @@ class TimelineApp:
         self.button_states = []  # Suivi de l'état des boutons : True pour vert, False pour rouge
         self.user_names = [user['name'] for user in self.users]  # Noms d'utilisateurs
         self.button_positions = []
+
+
+    def run(self):
+        self.canvas.create_text(
+            self.screen_width // 2, 50, text=self.title, font=("Helvetica", 48), anchor="center"
+        )
+
+        # Création de la timeline
+        self.canvas.create_line(self.bar_start_x, self.bar_y, self.bar_end_x, self.bar_y, fill="black", width=5)
+        self.canvas.create_text(self.bar_start_x, self.bar_y + 20, text=self.start_hour, anchor="e")
+        self.canvas.create_text(self.bar_end_x, self.bar_y + 20, text=self.end_hour, anchor="w")
+
+        self.event_manager.add_all_event_icons()
+
+        self.icon_indicator = self.event_manager.add_indicator_icon(self.indicators[0]["icon_path"])
+        self.current_time_text = self.canvas.create_text(self.screen_width // 2, self.screen_height - 50, text="",
+                                                         font=("Helvetica", 48), anchor="center")
+
+        # Appeler la méthode pour créer les boutons sous chaque événement pour chaque utilisateur
+        self.create_buttons()
+
+        # Appeler la méthode pour afficher l'événement quotidien
+        self.display_daily_event()
+
+        self.root.bind("<Escape>", self.exit_fullscreen)
+
+        self.update_indicator()
+
+        self.root.mainloop()
 
     def update_indicator(self):
         now = datetime.datetime.now()
@@ -164,27 +197,66 @@ class TimelineApp:
         #print("Sons chargés :", sounds)  # Affiche les sons chargés pour le débogage
         return sounds
 
-    def run(self):
-        self.canvas.create_text(
-            self.screen_width // 2, 50, text=self.title, font=("Helvetica", 48), anchor="center"
-        )
+    import random
 
-        # Création de la timeline
-        self.canvas.create_line(self.bar_start_x, self.bar_y, self.bar_end_x, self.bar_y, fill="black", width=5)
-        self.canvas.create_text(self.bar_start_x, self.bar_y + 20, text=self.start_hour, anchor="e")
-        self.canvas.create_text(self.bar_end_x, self.bar_y + 20, text=self.end_hour, anchor="w")
+    def display_daily_event(self):
+        """
+        Affiche un événement quotidien dans un carré en haut à droite.
+        Si aucun événement spécifique au jour n'est défini, un événement aléatoire est choisi.
+        """
+        # Obtenir le jour de la semaine
+        today = datetime.datetime.now().strftime("%A")
 
-        self.event_manager.add_all_event_icons()
+        # Charger les événements journaliers et aléatoires
+        daily_events = self.data_loader.data.get("daily_events", {})
+        random_events = self.data_loader.data.get("daily_events_random", [])
 
-        self.icon_indicator = self.event_manager.add_indicator_icon(self.indicators[0]["icon_path"])
-        self.current_time_text = self.canvas.create_text(self.screen_width // 2, self.screen_height - 50, text="",
-                                                         font=("Helvetica", 48), anchor="center")
+        # Récupérer l'événement spécifique au jour
+        event = daily_events.get(today, None)
 
-        # Appeler la méthode pour créer les boutons sous chaque événement pour chaque utilisateur
-        self.create_buttons()
+        # Si aucun événement spécifique au jour, choisir un événement aléatoire
+        if not event and random_events:
+            event = random.choice(random_events)
 
-        self.root.bind("<Escape>", self.exit_fullscreen)
+            # Construire le chemin absolu pour l'icône si nécessaire
+            if "icon" in event and "icon_path" not in event:
+                project_root = Path(__file__).resolve().parents[1]
+                event["icon_path"] = os.path.join(project_root, event["icon"])
 
-        self.update_indicator()
+        # Si un événement est trouvé, afficher son icône et sa description
+        if event:
+            icon_path = event.get("icon_path")
+            description = event.get("description", "")
 
-        self.root.mainloop()
+            # Ajouter un rectangle (le fond du carré)
+            self.canvas.create_rectangle(
+                self.screen_width - 300, 20, self.screen_width - 20, 300, fill="lightgray", outline="black"
+            )
+
+            # Ajouter un titre en gras centré en haut du carré
+            self.canvas.create_text(
+                self.screen_width - 160, 40, text=f"Événement du jour",
+                font=("Helvetica", 16, "bold"), anchor="center"
+            )
+
+            # Charger et afficher l'icône si disponible
+            if icon_path:
+                icon_image = Image.open(icon_path)
+                icon_image = icon_image.resize((210, 210), Image.LANCZOS)
+                icon_photo = ImageTk.PhotoImage(icon_image)
+
+                self.canvas.create_image(
+                    self.screen_width - 160, 165, image=icon_photo, anchor="center"
+                )
+
+                # Sauvegarder l'image pour éviter que le ramasse-miettes ne la supprime
+                if not hasattr(self, "image_references"):
+                    self.image_references = []
+                self.image_references.append(icon_photo)
+
+            # Ajouter une description sous l'icône
+            self.canvas.create_text(
+                self.screen_width - 160, 285, text=description,
+                font=("Helvetica", 12), anchor="center"
+            )
+

@@ -26,6 +26,15 @@
     {"time": "19:20", "icon": "brosse_dent.png"},
     {"time": "19:30", "icon": "lecture_lit.webp"}
   ],
+  "daily_events": [
+    {"day": "Tuesday", "icon": "daily_events/menage_chambre.webp", "description": "Ménage de la chambre"},
+    {"day": "Wednesday", "icon": "daily_events/rangement_soussol.webp", "description": "Rangement du sous-sol"},
+    {"day": "Thursday", "icon": "daily_events/rangement_vetement.webp", "description": "Rangement de ses vêtements"}
+  ],
+  "daily_events_random": [
+    {"icon": "daily_events/bricolage.webp", "description": "Faire un bricolage"},
+    {"icon": "daily_events/deguisement.webp", "description": "Vous déguiser"}
+  ],
   "sounds": [
     {"type": "button", "file": "click-47609.mp3"},
     {"type": "completion", "file": "applause-cheer.mp3"}
