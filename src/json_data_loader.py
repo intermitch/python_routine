@@ -30,6 +30,16 @@ class JsonDataLoader:
                     "description": event.get("description", "")
                 }
 
+        daily_events_random_list = data.get("daily_events_random", [])
+        daily_events_random = []
+        for event in daily_events_random_list:
+            if "icon" in event:
+                event["icon_path"] = os.path.join(project_root, "images", event["icon"])
+                daily_events_random.append({
+                    "icon_path": event["icon_path"],
+                    "description": event.get("description", "")
+                })
+
         indicators_data = data.get("indicators", [])
         for indicator in indicators_data:
             indicator["icon_path"] = os.path.join(project_root, "images", indicator["icon"])
@@ -50,5 +60,6 @@ class JsonDataLoader:
             "users": users_data,
             "sounds": sounds_data,
             "indicators": indicators_data,
-            "daily_events": daily_events
+            "daily_events": daily_events,
+            "daily_events_random": daily_events_random
         }

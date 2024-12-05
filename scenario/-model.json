@@ -19,7 +19,6 @@
     {"day": "Monday", "icon": "daily_events/mitaine.png", "description": "Activité pour lundi"},
     {"day": "Tuesday", "icon": "daily_events/mitaine.png", "description": "Activité pour mardi"},
     {"day": "Wednesday", "icon": "daily_events/mitaine.png", "description": "Activité pour mercredi"},
-    {"day": "Thursday", "icon": "daily_events/menage_chambre.webp", "description": "Ménage de la chambre"},
     {"day": "Friday", "icon": "daily_events/mitaine.png", "description": "Activité pour vendredi"},
     {"day": "Saturday", "icon": "daily_events/mitaine.png", "description": "Activité pour samedi"},
     {"day": "Sunday", "icon": "daily_events/mitaine.png", "description": "Activité pour dimanche"}

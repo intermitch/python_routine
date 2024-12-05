@@ -1,5 +1,8 @@
+import os
+import random
 import tkinter as tk
 import datetime
+from pathlib import Path
 
 from pygame import mixer
 
@@ -194,34 +197,56 @@ class TimelineApp:
         #print("Sons chargés :", sounds)  # Affiche les sons chargés pour le débogage
         return sounds
 
+    import random
+
     def display_daily_event(self):
         """
         Affiche un événement quotidien dans un carré en haut à droite.
+        Si aucun événement spécifique au jour n'est défini, un événement aléatoire est choisi.
         """
-        #today = datetime.now().strftime("%A")  # Obtenir le jour de la semaine
+        # Obtenir le jour de la semaine
         today = datetime.datetime.now().strftime("%A")
 
-        daily_events = self.data_loader.data["daily_events"]
+        # Charger les événements journaliers et aléatoires
+        daily_events = self.data_loader.data.get("daily_events", {})
+        random_events = self.data_loader.data.get("daily_events_random", [])
+
+        # Récupérer l'événement spécifique au jour
         event = daily_events.get(today, None)
+
+        # Si aucun événement spécifique au jour, choisir un événement aléatoire
+        if not event and random_events:
+            event = random.choice(random_events)
+
+            # Construire le chemin absolu pour l'icône si nécessaire
+            if "icon" in event and "icon_path" not in event:
+                project_root = Path(__file__).resolve().parents[1]
+                event["icon_path"] = os.path.join(project_root, event["icon"])
 
         # Si un événement est trouvé, afficher son icône et sa description
         if event:
             icon_path = event.get("icon_path")
             description = event.get("description", "")
 
-            # Charger l'icône
+            # Ajouter un rectangle (le fond du carré)
+            self.canvas.create_rectangle(
+                self.screen_width - 300, 20, self.screen_width - 20, 300, fill="lightgray", outline="black"
+            )
+
+            # Ajouter un titre en gras centré en haut du carré
+            self.canvas.create_text(
+                self.screen_width - 160, 40, text=f"Événement du jour",
+                font=("Helvetica", 16, "bold"), anchor="center"
+            )
+
+            # Charger et afficher l'icône si disponible
             if icon_path:
                 icon_image = Image.open(icon_path)
-                icon_image = icon_image.resize((100, 100), Image.LANCZOS)
+                icon_image = icon_image.resize((210, 210), Image.LANCZOS)
                 icon_photo = ImageTk.PhotoImage(icon_image)
 
-                # Ajouter un rectangle
-                self.canvas.create_rectangle(
-                    self.screen_width - 300, 20, self.screen_width - 20, 300, fill="lightgray", outline="black"
-                )
-                # Ajouter l'icône
                 self.canvas.create_image(
-                    self.screen_width - 90, 60, image=icon_photo, anchor="center"
+                    self.screen_width - 160, 165, image=icon_photo, anchor="center"
                 )
 
                 # Sauvegarder l'image pour éviter que le ramasse-miettes ne la supprime
@@ -229,7 +254,9 @@ class TimelineApp:
                     self.image_references = []
                 self.image_references.append(icon_photo)
 
-            # Ajouter le texte
+            # Ajouter une description sous l'icône
             self.canvas.create_text(
-                self.screen_width - 90, 120, text=description, font=("Helvetica", 12), anchor="center"
+                self.screen_width - 160, 285, text=description,
+                font=("Helvetica", 12), anchor="center"
             )
+
