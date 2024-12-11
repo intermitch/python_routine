@@ -14,23 +14,36 @@ from PIL import Image, ImageTk
 
 class TimelineApp:
     def __init__(self, events_file, fullscreen=True):
+        """
+        Initialisation de l'application TimelineApp.
+        """
+        # Charger les données du fichier JSON
         self.events_file = events_file
         self.fullscreen = fullscreen
         self.data_loader = JsonDataLoader(events_file)
         self.title = self.data_loader.data["title"]
         self.start_hour = self.data_loader.data["start_hour"]
         self.end_hour = self.data_loader.data["end_hour"]
-        self.events = self.data_loader.data["events"]
+        self.timelines = self.data_loader.data["timelines"]  # Charger les timelines
         self.users = self.data_loader.data["users"]
         self.num_users = len(self.users)
-        self.indicators = self.data_loader.data["indicators"]
+        self.sounds = self.data_loader.data["sounds"]
 
+        # Gestion des événements journaliers
+        self.daily_events = self.data_loader.data.get("daily_events", {})
+        self.daily_events_random = self.data_loader.data.get("daily_events_random", [])
+
+        # Calcul des heures de début et de fin
         self.today = datetime.datetime.now().date()
-        self.start_time = datetime.datetime.combine(self.today,
-                                                    datetime.datetime.strptime(self.start_hour, "%H:%M").time())
-        self.end_time = datetime.datetime.combine(self.today, datetime.datetime.strptime(self.end_hour, "%H:%M").time())
+        self.start_time = datetime.datetime.combine(
+            self.today, datetime.datetime.strptime(self.start_hour, "%H:%M").time()
+        )
+        self.end_time = datetime.datetime.combine(
+            self.today, datetime.datetime.strptime(self.end_hour, "%H:%M").time()
+        )
         self.total_minutes = int((self.end_time - self.start_time).total_seconds() / 60)
 
+        # Initialisation de la fenêtre principale
         self.root = tk.Tk()
         self.root.title("Routine - " + self.title)
         if self.fullscreen:
@@ -39,54 +52,57 @@ class TimelineApp:
         self.screen_width = self.root.winfo_screenwidth()
         self.screen_height = self.root.winfo_screenheight()
 
+        # Configuration du canvas
         self.canvas_width = self.screen_width * 0.8
-        self.canvas_height = 100
-        self.canvas = tk.Canvas(self.root, width=self.screen_width, height=self.screen_height, bg="white")
+        self.canvas_height = self.screen_height
+        self.canvas = tk.Canvas(
+            self.root, width=self.screen_width, height=self.screen_height, bg="white"
+        )
         self.canvas.pack()
 
-        self.bar_y = self.screen_height // 2
+        # Positions de base pour la timeline
+        self.bar_y = self.screen_height // 4  # Point de départ pour la première timeline
         self.bar_start_x = (self.screen_width - self.canvas_width) // 2
         self.bar_end_x = self.bar_start_x + self.canvas_width
         self.pixels_per_minute = self.canvas_width / self.total_minutes
 
-        self.event_manager = EventManager(self.events, self.start_time, self.end_time, self.canvas, self.bar_y,
-                                          self.bar_start_x, self.pixels_per_minute)
+        # Gestionnaire d'événements
+        self.event_manager = EventManager(
+            self.timelines,
+            self.start_time,
+            self.end_time,
+            self.canvas,
+            self.bar_y,
+            self.bar_start_x,
+            self.pixels_per_minute,
+        )
 
+        # Icône de l'indicateur de temps courant
         self.icon_indicator = None
         self.current_time_text = None
 
-        # Liste pour suivre l'état des boutons (rouge ou vert)
+        # Gestion des boutons et de leur état
         self.event_buttons = []
         self.button_states = []  # Suivi de l'état des boutons : True pour vert, False pour rouge
-        self.user_names = [user['name'] for user in self.users]  # Noms d'utilisateurs
+        self.user_names = [user["name"] for user in self.users]  # Noms des utilisateurs
         self.button_positions = []
-
 
     def run(self):
         self.canvas.create_text(
             self.screen_width // 2, 50, text=self.title, font=("Helvetica", 48), anchor="center"
         )
 
-        # Création de la timeline
-        self.canvas.create_line(self.bar_start_x, self.bar_y, self.bar_end_x, self.bar_y, fill="black", width=5)
-        self.canvas.create_text(self.bar_start_x, self.bar_y + 20, text=self.start_hour, anchor="e")
-        self.canvas.create_text(self.bar_end_x, self.bar_y + 20, text=self.end_hour, anchor="w")
+        timeline_y_offset = 100
+        for idx, timeline in enumerate(self.timelines):
+            bar_y = self.bar_y + idx * timeline_y_offset
+            self.canvas.create_line(
+                self.bar_start_x, bar_y, self.bar_end_x, bar_y, fill="black", width=5
+            )
+            self.canvas.create_text(self.bar_start_x - 50, bar_y, text=f"Ligne {timeline['id']}", anchor="e")
 
-        self.event_manager.add_all_event_icons()
-
-        self.icon_indicator = self.event_manager.add_indicator_icon(self.indicators[0]["icon_path"])
-        self.current_time_text = self.canvas.create_text(self.screen_width // 2, self.screen_height - 50, text="",
-                                                         font=("Helvetica", 48), anchor="center")
-
-        # Appeler la méthode pour créer les boutons sous chaque événement pour chaque utilisateur
-        self.create_buttons()
-
-        # Appeler la méthode pour afficher l'événement quotidien
-        self.display_daily_event()
-
-        self.root.bind("<Escape>", self.exit_fullscreen)
-
-        self.update_indicator()
+            # Ajouter les événements
+            for event in timeline["events"]:
+                self.event_manager.add_event_icon(event["time"], event["icon_path"])
 
         self.root.mainloop()
 

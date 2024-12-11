@@ -15,6 +15,11 @@ class JsonDataLoader:
 
         users_data = data.get("users", [])
 
+        timelines_data = data.get("timelines", [])
+        for timeline in timelines_data:
+            for event in timeline.get("events", []):
+                event["icon_path"] = os.path.join(project_root, "images", event["icon"])
+
         events_data = data.get("events", [])
         for event in events_data:
             event["icon_path"] = os.path.join(project_root, "images", event["icon"])
@@ -53,13 +58,12 @@ class JsonDataLoader:
         end_hour = data.get("end_hour", "23:59")
 
         return {
-            "title": title,
-            "start_hour": start_hour,
-            "end_hour": end_hour,
-            "events": events_data,
-            "users": users_data,
-            "sounds": sounds_data,
-            "indicators": indicators_data,
-            "daily_events": daily_events,
-            "daily_events_random": daily_events_random
+        "title": data.get("title", "Titre"),
+        "start_hour": data.get("start_hour", "00:00"),
+        "end_hour": data.get("end_hour", "23:59"),
+        "users": users_data,
+        "timelines": timelines_data,
+        "sounds": sounds_data,
+        "daily_events": data.get("daily_events", []),
+        "daily_events_random": data.get("daily_events_random", [])
         }
