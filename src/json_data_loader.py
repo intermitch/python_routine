@@ -15,6 +15,14 @@ class JsonDataLoader:
 
         users_data = data.get("users", [])
 
+        # Chargement des timelines et de leurs indicateurs
+        timelines_data = data.get("timelines", [])
+        for timeline in timelines_data:
+            for event in timeline.get("events", []):
+                event["icon_path"] = os.path.join(project_root, "images", event["icon"])
+            for indicator in timeline.get("indicators", []):
+                indicator["icon_path"] = os.path.join(project_root, "images", indicator["icon"])
+
         timelines_data = data.get("timelines", [])
         for timeline in timelines_data:
             for event in timeline.get("events", []):

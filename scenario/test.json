@@ -12,6 +12,11 @@
       "events": [
         {"time": "10:24", "icon": "brosse.png"},
         {"time": "10:25", "icon": "sac_ecole.png"}
+      ],
+      "indicators": [
+        {"time": "10:00", "icon": "petite_fille_baille.webp"},
+        {"time": "10:15", "icon": "petite_fille_baille.webp"},
+        {"time": "10:30", "icon": "petite_fille.png"}
       ]
     },
     {
@@ -19,6 +24,11 @@
       "events": [
         {"time": "11:40", "icon": "mitaine.png"},
         {"time": "11:50", "icon": "bus.webp"}
+      ],
+      "indicators": [
+        {"time": "10:00", "icon": "petite_fille_baille.webp"},
+        {"time": "11:30", "icon": "petite_fille_hiver.webp"},
+        {"time": "11:45", "icon": "fille_autobus.webp"}
       ]
     }
   ],

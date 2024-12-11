@@ -95,14 +95,22 @@ class TimelineApp:
         timeline_y_offset = 100
         for idx, timeline in enumerate(self.timelines):
             bar_y = self.bar_y + idx * timeline_y_offset
+
+            # Créer une ligne pour la timeline
             self.canvas.create_line(
                 self.bar_start_x, bar_y, self.bar_end_x, bar_y, fill="black", width=5
             )
-            self.canvas.create_text(self.bar_start_x - 50, bar_y, text=f"Ligne {timeline['id']}", anchor="e")
+            self.canvas.create_text(
+                self.bar_start_x - 50, bar_y, text=f"Ligne {timeline['id']}", anchor="e"
+            )
 
-            # Ajouter les événements
+            # Ajouter les événements de la timeline
             for event in timeline["events"]:
-                self.event_manager.add_event_icon(event["time"], event["icon_path"])
+                self.event_manager.add_event_icon(event["time"], event["icon_path"], bar_y)
+
+            # Ajouter les indicateurs de la timeline
+            for indicator in timeline.get("indicators", []):
+                self.event_manager.add_indicator_icon(indicator["time"], indicator["icon_path"], bar_y)
 
         self.root.mainloop()
 

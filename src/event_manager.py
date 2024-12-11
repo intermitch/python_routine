@@ -16,36 +16,33 @@ class EventManager:
         self.event_positions = []
         self.event_frames = []
 
-    def add_event_icon(self, event_time_str, icon_path):
-        event_time = datetime.datetime.combine(self.start_time.date(),
-                                               datetime.datetime.strptime(event_time_str, "%H:%M").time())
+    def add_event_icon(self, event_time_str, icon_path, bar_y):
+        """
+        Ajoute une icône d'événement à une position spécifique sur la timeline.
+        :param event_time_str: Heure de l'événement (format HH:MM).
+        :param icon_path: Chemin vers l'icône de l'événement.
+        :param bar_y: Position verticale de la timeline.
+        """
+        event_time = datetime.datetime.combine(
+            self.start_time.date(),
+            datetime.datetime.strptime(event_time_str, "%H:%M").time()
+        )
         if self.start_time <= event_time <= self.end_time:
             elapsed_minutes = (event_time - self.start_time).total_seconds() / 60
             x_position = self.bar_start_x + elapsed_minutes * self.pixels_per_minute
 
-            # Charger l'image (WebP ou autre format supporté)
-            event_icon_image = Image.open(icon_path)
+            # Charger l'icône
+            icon_image = Image.open(icon_path)
+            icon_image = icon_image.resize((30, 30), Image.LANCZOS)
+            icon_photo = ImageTk.PhotoImage(icon_image)
 
-            # Vérifier si l'image a un canal alpha, sinon le convertir
-            if event_icon_image.mode != "RGBA":
-                event_icon_image = event_icon_image.convert("RGBA")
+            # Ajouter l'icône au canvas
+            self.canvas.create_image(x_position, bar_y - 30, image=icon_photo, anchor="center")
 
-            # Redimensionner l'image
-            event_icon_image = event_icon_image.resize((50, 50), Image.LANCZOS)
-
-            # Créer une version compatible avec Tkinter
-            event_icon = ImageTk.PhotoImage(event_icon_image)
-
-            # Ajouter l'image à la Canvas
-            icon_id = self.canvas.create_image(x_position, self.bar_y - 80, image=event_icon, anchor="center")
-
-            # Sauvegarder les références pour éviter le ramasse-miettes
-            self.event_icons.append(event_icon)
-            self.event_positions.append((x_position, event_time))
-
-            # Ajouter le texte associé
-            pos_y_mod = 0 if len(self.event_positions) % 2 == 0 else 20
-            self.canvas.create_text(x_position, self.bar_y + 60 - pos_y_mod, text=event_time_str, anchor="n")
+            # Sauvegarder l'image pour éviter qu'elle soit supprimée
+            if not hasattr(self, "image_references"):
+                self.image_references = []
+            self.image_references.append(icon_photo)
 
     def add_indicator_icon(self, icon_path):
         # Charger l'image (WebP ou tout autre format supporté)
@@ -69,16 +66,33 @@ class EventManager:
         # Ajouter l'image à la Canvas
         return self.canvas.create_image(self.bar_start_x, self.bar_y, image=icon, anchor="center")
 
-    def update_indicator_icon(self, canvas_item, new_image_path):
-        icon_image = Image.open(new_image_path)
-        icon_image = icon_image.resize((80, 80), Image.LANCZOS)
-        new_icon = ImageTk.PhotoImage(icon_image)
+    def add_indicator_icon(self, indicator_time, icon_path, bar_y):
+        """
+        Ajoute une icône d'indicateur à une timeline spécifique.
+        :param indicator_time: Heure de l'indicateur.
+        :param icon_path: Chemin vers l'icône de l'indicateur.
+        :param bar_y: Position verticale de la timeline.
+        """
+        indicator_time = datetime.datetime.combine(
+            self.start_time.date(),
+            datetime.datetime.strptime(indicator_time, "%H:%M").time()
+        )
+        if self.start_time <= indicator_time <= self.end_time:
+            elapsed_minutes = (indicator_time - self.start_time).total_seconds() / 60
+            x_position = self.bar_start_x + elapsed_minutes * self.pixels_per_minute
 
-        if not hasattr(self.canvas, "image_references"):
-            self.canvas.image_references = []
-        self.canvas.image_references.append(new_icon)
+            # Charger l'icône
+            icon_image = Image.open(icon_path)
+            icon_image = icon_image.resize((30, 30), Image.LANCZOS)
+            icon_photo = ImageTk.PhotoImage(icon_image)
 
-        self.canvas.itemconfig(canvas_item, image=new_icon)
+            # Ajouter l'icône au canvas
+            self.canvas.create_image(x_position, bar_y - 30, image=icon_photo, anchor="center")
+
+            # Sauvegarder l'image pour éviter qu'elle soit supprimée
+            if not hasattr(self, "image_references"):
+                self.image_references = []
+            self.image_references.append(icon_photo)
 
     def update_event_frames(self, now_time):
         for i, (event_x, event_time) in enumerate(self.event_positions):
@@ -98,5 +112,15 @@ class EventManager:
                     self.event_frames[i] = None
 
     def add_all_event_icons(self):
-        for event in self.events:
-            self.add_event_icon(event["time"], event["icon_path"])
+        """
+        Ajoute toutes les icônes d'événements pour chaque timeline.
+        """
+        for timeline in self.timelines:
+            # Déterminer la position verticale pour cette timeline
+            timeline_id = timeline["id"]
+            bar_y = self.bar_y + (timeline_id - 1) * 100  # Décalage vertical par timeline
+
+            # Ajouter les icônes d'événements pour cette timeline
+            for event in timeline["events"]:
+                self.add_event_icon(event["time"], event["icon_path"], bar_y)
+
