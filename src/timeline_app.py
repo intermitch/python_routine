@@ -7,6 +7,7 @@ from pathlib import Path
 from pygame import mixer
 
 from src.json_data_loader import JsonDataLoader
+from src.event_manager import EventManager
 from PIL import Image, ImageTk
 
 class TimelineApp:
@@ -41,6 +42,8 @@ class TimelineApp:
         self.bar_end_x = self.bar_start_x + self.canvas_width
         self.pixels_per_minute = self.canvas_width / self.total_minutes
 
+        self.event_manager = EventManager(self.canvas, self.bar_start_x, self.pixels_per_minute, self.today, self.start_time, self.end_time)
+
         self.image_references = []
 
     def run(self):
@@ -57,8 +60,8 @@ class TimelineApp:
 
             timeline_y_offset = y_offset + 100
 
-            self.add_timeline_events(timeline["events"], timeline_y_offset)
-            self.add_timeline_indicators(timeline["indicators"], timeline_y_offset)
+            self.event_manager.add_events(timeline["events"], timeline_y_offset)
+            self.event_manager.add_indicators(timeline["indicators"], timeline_y_offset)
 
             for user_idx, user in enumerate(timeline["users"]):
                 user_bar_y = timeline_y_offset + user_idx * 150
@@ -74,50 +77,6 @@ class TimelineApp:
         self.root.bind("<Escape>", self.exit_fullscreen)
         self.update_indicator()
         self.root.mainloop()
-
-    def add_timeline_events(self, events, timeline_y_offset):
-        for event in events:
-            event_time = datetime.datetime.combine(self.today,
-                                                   datetime.datetime.strptime(event["time"], "%H:%M").time())
-            if self.start_time <= event_time <= self.end_time:
-                elapsed_minutes = (event_time - self.start_time).total_seconds() / 60
-                x_position = self.bar_start_x + elapsed_minutes * self.pixels_per_minute
-
-                try:
-                    if "icon_path" not in event:
-                        print(f"Missing 'icon_path' for event: {event}")
-                        continue
-
-                    # Load and place event icon
-                    event_icon_image = Image.open(event["icon_path"]).resize((50, 50), Image.LANCZOS)
-                    event_icon = ImageTk.PhotoImage(event_icon_image)
-                    self.canvas.create_image(x_position, timeline_y_offset - 40, image=event_icon, anchor="center")
-                    self.image_references.append(event_icon)
-                except FileNotFoundError:
-                    print(f"Event icon not found: {event['icon_path']}")
-
-    def add_timeline_indicators(self, indicators, timeline_y_offset):
-        for indicator in indicators:
-            indicator_time = datetime.datetime.combine(self.today,
-                                                       datetime.datetime.strptime(indicator["time"], "%H:%M").time())
-            if self.start_time <= indicator_time <= self.end_time:
-                elapsed_minutes = (indicator_time - self.start_time).total_seconds() / 60
-                x_position = self.bar_start_x + elapsed_minutes * self.pixels_per_minute
-
-                try:
-                    if "icon_path" not in indicator:
-                        print(f"Missing 'icon_path' for indicator: {indicator}")
-                        continue
-
-                    # Load and place indicator icon
-                    indicator_image = Image.open(indicator["icon_path"]).resize((40, 40), Image.LANCZOS)
-                    indicator_icon = ImageTk.PhotoImage(indicator_image)
-                    self.canvas.create_image(
-                        x_position, timeline_y_offset - 50, image=indicator_icon, anchor="center"
-                    )
-                    self.image_references.append(indicator_icon)
-                except FileNotFoundError:
-                    print(f"Indicator icon not found: {indicator['icon_path']}")
 
     def update_indicator(self):
         now = datetime.datetime.now()
