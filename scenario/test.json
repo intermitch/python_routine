@@ -1,19 +1,38 @@
 {
   "title": "Routine de test",
   "start_hour": "10:00",
-  "end_hour": "13:00",
-  "users": [
-    {"name": "Olivia"},
-    {"name": "Dahlia"}
-  ],
-  "indicators": [
-    {"time": "20:00", "icon": "petite_fille_baille.webp"}
-  ],
-  "events": [
-    {"time": "10:24", "icon": "brosse.png"},
-    {"time": "10:25", "icon": "sac_ecole.png"},
-    {"time": "11:40", "icon": "mitaine.png"},
-    {"time": "11:50", "icon": "bus.webp"}
+  "end_hour": "17:00",
+  "timelines": [
+    {
+      "name": "Matinée des enfants",
+      "users": [
+        {"name": "Olivia"},
+        {"name": "Dahlia"}
+      ],
+      "events": [
+       {"time": "10:25", "icon": "sac_ecole.png"},
+        {"time": "11:50", "icon": "bus.webp"}
+      ],
+      "indicators": [
+        {"time": "10:30", "icon": "petite_fille_baille.webp"},
+        {"time": "11:00", "icon": "reveil.png"}
+      ]
+    },
+    {
+      "name": "Après-midi des parents",
+      "users": [
+        {"name": "Papa"},
+        {"name": "Maman"}
+      ],
+      "events": [
+       {"time": "10:25", "icon": "sac_ecole.png"},
+        {"time": "11:50", "icon": "bus.webp"}
+      ],
+      "indicators": [
+        {"time": "12:20", "icon": "sac_ecole.png"},
+        {"time": "12:50", "icon": "sac_ecole.png"}
+      ]
+    }
   ],
   "daily_events": [
     {"day": "Monday", "icon": "daily_events/mitaine.png", "description": "Activité pour lundi"},
