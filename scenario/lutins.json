@@ -6,6 +6,7 @@
     {"name": "Oli-JuJuBe"},
     {"name": "ChoCo-Dali"}
   ],
+  "background": "lutins/background_atelier.webp",
   "indicators": [
     {"time": "6:00", "icon": "lutins/lutin_bobette_baille.webp"},
     {"time": "6:30", "icon": "lutins/lutin_bobette.webp"},

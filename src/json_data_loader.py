@@ -51,6 +51,10 @@ class JsonDataLoader:
         title = data.get("title", "Titre")
         start_hour = data.get("start_hour", "00:00")
         end_hour = data.get("end_hour", "23:59")
+        if data.get("background", ""):
+            background = os.path.join(project_root, "images", data.get("background", ""))
+        else:
+            background = None
 
         return {
             "title": title,
@@ -59,6 +63,7 @@ class JsonDataLoader:
             "events": events_data,
             "users": users_data,
             "sounds": sounds_data,
+            "background": background,
             "indicators": indicators_data,
             "daily_events": daily_events,
             "daily_events_random": daily_events_random

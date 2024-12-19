@@ -62,16 +62,20 @@ class TimelineApp:
         self.button_positions = []
 
         # Définir l'arrière-plan ici (remplacez 'background.jpg' par le chemin réel de votre image)
-        self.set_background("images\\lutins\\background_atelier.webp")
+        self.set_background(self.data_loader.data["background"])
 
     def set_background(self, background_path):
-        # Charger l'image d'arrière-plan
-        bg_image = Image.open(background_path)
-        bg_image = bg_image.resize((self.screen_width, self.screen_height), Image.LANCZOS)
-        self.bg_photo = ImageTk.PhotoImage(bg_image)  # Conserver une référence pour éviter le ramasse-miettes
+        if background_path and Path(background_path).exists():
+            # Charger l'image d'arrière-plan
+            bg_image = Image.open(background_path)
+            bg_image = bg_image.resize((self.screen_width, self.screen_height), Image.LANCZOS)
+            self.bg_photo = ImageTk.PhotoImage(bg_image)  # Conserver une référence pour éviter le ramasse-miettes
 
-        # Afficher l'image sur le canevas
-        self.canvas.create_image(0, 0, image=self.bg_photo, anchor="nw")
+            # Afficher l'image sur le canevas
+            self.canvas.create_image(0, 0, image=self.bg_photo, anchor="nw")
+        else:
+            # Aucun chemin d'image fourni ou fichier non trouvé, utiliser un fond blanc
+            self.canvas.configure(bg="white")
 
     def run(self):
         self.canvas.create_text(
