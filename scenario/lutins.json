@@ -1,0 +1,34 @@
+{
+  "title": "Routine des lutins",
+  "start_hour": "6:30",
+  "end_hour": "7:45",
+  "users": [
+    {"name": "Oli-JuJuBe"},
+    {"name": "ChoCo-Dali"}
+  ],
+  "indicators": [
+    {"time": "6:00", "icon": "lutins/lutin_bobette_baille.webp"},
+    {"time": "6:30", "icon": "lutins/lutin_bobette.webp"},
+    {"time": "6:55", "icon": "lutins/lutin_heureux.webp"},
+    {"time": "7:05", "icon": "lutins/lutin_bonbon.webp"},
+    {"time": "7:16", "icon": "lutins/lutine_tresse.webp"},
+    {"time": "7:22", "icon": "lutins/lutin_marcher_main.webp"},
+    {"time": "7:30", "icon": "lutins/lutines_habit_neige.webp"}
+  ],
+  "events": [
+    {"time": "6:30", "icon": "lutins/lutin_programme.webp"},
+    {"time": "6:40", "icon": "lutins/lutin_calendrier.webp"},
+    {"time": "6:50", "icon": "lutins/lutin_reveille.webp"},
+    {"time": "6:55", "icon": "lutins/robe.webp"},
+    {"time": "7:00", "icon": "lutins/lutin_dejeuner.webp"},
+    {"time": "7:12", "icon": "lutins/manger_bonbons.webp"},
+    {"time": "7:16", "icon": "lutins/tresse.webp"},
+    {"time": "7:25", "icon": "lutins/sac_bonbons.webp"},
+    {"time": "7:30", "icon": "lutins/lutins_vetements.webp"},
+    {"time": "7:40", "icon": "lutins/lutins_traineau.webp"}
+  ],
+  "sounds": [
+    {"type": "button", "file": "lutins/pet.mp3"},
+    {"type": "completion", "file": "lutins/chanson_lutin.mp3"}
+  ]
+}

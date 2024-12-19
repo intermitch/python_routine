@@ -31,7 +31,7 @@ class EventManager:
                 event_icon_image = event_icon_image.convert("RGBA")
 
             # Redimensionner l'image
-            event_icon_image = event_icon_image.resize((50, 50), Image.LANCZOS)
+            event_icon_image = event_icon_image.resize((100, 100), Image.LANCZOS)
 
             # Créer une version compatible avec Tkinter
             event_icon = ImageTk.PhotoImage(event_icon_image)

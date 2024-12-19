@@ -61,10 +61,21 @@ class TimelineApp:
         self.user_names = [user['name'] for user in self.users]  # Noms d'utilisateurs
         self.button_positions = []
 
+        # Définir l'arrière-plan ici (remplacez 'background.jpg' par le chemin réel de votre image)
+        self.set_background("images\\lutins\\background_atelier.webp")
+
+    def set_background(self, background_path):
+        # Charger l'image d'arrière-plan
+        bg_image = Image.open(background_path)
+        bg_image = bg_image.resize((self.screen_width, self.screen_height), Image.LANCZOS)
+        self.bg_photo = ImageTk.PhotoImage(bg_image)  # Conserver une référence pour éviter le ramasse-miettes
+
+        # Afficher l'image sur le canevas
+        self.canvas.create_image(0, 0, image=self.bg_photo, anchor="nw")
 
     def run(self):
         self.canvas.create_text(
-            self.screen_width // 2, 50, text=self.title, font=("Helvetica", 48), anchor="center"
+            self.screen_width // 2, 50, text=self.title, font=("Helvetica", 48), anchor="center", fill="white"
         )
 
         # Création de la timeline
