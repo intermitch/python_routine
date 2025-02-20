@@ -7,13 +7,13 @@
     {"name": "Dahlia"}
   ],
   "indicators": [
-    {"time": "20:00", "icon": "petite_fille_baille.webp"}
+    {"time": "20:00", "icon": "indicators/girl/petite_fille_baille.webp"}
   ],
   "events": [
-    {"time": "10:24", "icon": "brosse.png"},
-    {"time": "10:25", "icon": "sac_ecole.png"},
-    {"time": "11:40", "icon": "mitaine.png"},
-    {"time": "11:50", "icon": "bus.webp"}
+    {"time": "10:24", "icon": "events/brosse.png"},
+    {"time": "10:25", "icon": "events/sac_ecole.png"},
+    {"time": "11:40", "icon": "events/mitaine.png"},
+    {"time": "11:50", "icon": "events/bus.webp"}
   ],
   "daily_events": [
     {"day": "Monday", "icon": "daily_events/mitaine.png", "description": "Activité pour lundi"},

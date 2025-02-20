@@ -1,0 +1,30 @@
+{
+  "title": "Routine du matin de Vincent",
+  "start_hour": "5:45",
+  "end_hour": "7:15",
+  "users": [
+    {"name": "Vincent"}
+  ],
+  "indicators": [
+    {"time": "5:00", "icon": "indicators/boy/garcon_baille.webp"},
+    {"time": "6:00", "icon": "indicators/boy/garcon_leve.webp"},
+    {"time": "6:40", "icon": "indicators/boy/garcon_ecole.webp"},
+    {"time": "7:00", "icon": "indicators/boy/garcon_hiver.webp"},
+    {"time": "7:10", "icon": "indicators/boy/garcon_bus.webp"}
+  ],
+  "events": [
+    {"time": "6:00", "icon": "events/reveil.png"},
+    {"time": "6:40", "icon": "events/vetements_ecole_garcon.webp"},
+    {"time": "6:43", "icon": "events/dejeuner.png"},
+    {"time": "6:47", "icon": "events/vitamines.webp"},
+    {"time": "6:53", "icon": "events/brosse_dent.png"},
+    {"time": "6:55", "icon": "events/toilette.webp"},
+    {"time": "6:57", "icon": "events/sac_ecole.png"},
+    {"time": "7:00", "icon": "events/mitaine.png"},
+    {"time": "7:10", "icon": "events/bus.webp"}
+  ],
+  "sounds": [
+    {"type": "button", "file": "click-47609.mp3"},
+    {"type": "completion", "file": "applause-cheer.mp3"}
+  ]
+}

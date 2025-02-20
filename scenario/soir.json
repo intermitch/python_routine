@@ -7,24 +7,24 @@
     {"name": "Dahlia"}
   ],
   "indicators": [
-    {"time": "15:00", "icon": "petite_fille_hiver.webp"},
-    {"time": "15:35", "icon": "petite_fille_ecole.png"},
-    {"time": "18:00", "icon": "pyjama.jpg"},
-    {"time": "19:10", "icon": "petite_fille_levee.webp"},
-    {"time": "19:30", "icon": "petite_fille_baille.webp"}
+    {"time": "15:00", "icon": "indicators/girl/fille_hiver.webp"},
+    {"time": "15:35", "icon": "indicators/girl/fille_ecole.png"},
+    {"time": "18:00", "icon": "indicators/girl/fille_levee.webp"},
+    {"time": "19:10", "icon": "indicators/girl/fille_levee.webp"},
+    {"time": "19:30", "icon": "indicators/girl/fille_baille.webp"}
   ],
   "events": [
-    {"time": "15:30", "icon": "ranger_vetements.png"},
-    {"time": "15:38", "icon": "collation.png"},
-    {"time": "15:45", "icon": "devoirs.png"},
-    {"time": "16:00", "icon": "sac_ecole.png"},
-    {"time": "17:30", "icon": "souper.png"},
-    {"time": "18:00", "icon": "bain.png"},
-    {"time": "18:30", "icon": "preparer_vetements.png"},
-    {"time": "19:10", "icon": "pyjama.jpg"},
-    {"time": "19:15", "icon": "biscuits.png"},
-    {"time": "19:20", "icon": "brosse_dent.png"},
-    {"time": "19:30", "icon": "lecture_lit.webp"}
+    {"time": "15:30", "icon": "events/ranger_vetements.png"},
+    {"time": "15:38", "icon": "events/collation.png"},
+    {"time": "15:45", "icon": "events/devoirs.png"},
+    {"time": "16:00", "icon": "events/sac_ecole.png"},
+    {"time": "17:30", "icon": "events/souper.png"},
+    {"time": "18:00", "icon": "events/bain.png"},
+    {"time": "18:30", "icon": "events/preparer_vetements.png"},
+    {"time": "19:10", "icon": "events/pyjama.jpg"},
+    {"time": "19:15", "icon": "events/biscuits.png"},
+    {"time": "19:20", "icon": "events/brosse_dent.png"},
+    {"time": "19:30", "icon": "events/lecture_lit.webp"}
   ],
   "daily_events": [
     {"day": "Tuesday", "icon": "daily_events/menage_chambre.webp", "description": "Ménage de sa chambre"},
