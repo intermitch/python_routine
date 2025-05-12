@@ -1,0 +1,31 @@
+{
+  "title": "Routine du matin",
+  "start_hour": "10:30",
+  "end_hour": "11:45",
+  "users": [
+    {"name": "Olivia"},
+    {"name": "Dahlia"}
+  ],
+  "indicators": [
+    {"time": "10:00", "icon": "petite_fille_baille.webp"},
+    {"time": "10:50", "icon": "petite_fille_levee.webp"},
+    {"time": "11:00", "icon": "petite_fille.png"},
+    {"time": "11:11", "icon": "petite_fille_ecole.png"},
+    {"time": "11:30", "icon": "petite_fille_hiver.webp"},
+    {"time": "11:40", "icon": "fille_autobus.webp"}
+  ],
+  "events": [
+    {"time": "10:50", "icon": "reveil.png"},
+    {"time": "11:00", "icon": "dejeuner.png"},
+    {"time": "11:10", "icon": "robe.png"},
+    {"time": "11:12", "icon": "brosse_dent.png"},
+    {"time": "11:14", "icon": "brosse.png"},
+    {"time": "11:25", "icon": "sac_ecole.png"},
+    {"time": "11:30", "icon": "mitaine.png"},
+    {"time": "11:40", "icon": "bus.webp"}
+  ],
+  "sounds": [
+    {"type": "button", "file": "click-47609.mp3"},
+    {"type": "completion", "file": "applause-cheer.mp3"}
+  ]
+}
