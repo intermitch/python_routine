@@ -3,6 +3,7 @@ import random
 import tkinter as tk
 import datetime
 from pathlib import Path
+import requests
 
 from pygame import mixer
 
@@ -61,11 +62,84 @@ class TimelineApp:
         self.user_names = [user['name'] for user in self.users]  # Noms d'utilisateurs
         self.button_positions = []
 
+        # --- récupérer la config météo ---
+        self.weather_config = self.data_loader.data.get("weather", {})
+        self.municipality = self.weather_config.get("municipality", "")
+        self.weather_api_key = self.weather_config.get("api_key", "")
+
+    def display_weather(self):
+        """Récupère la température, la probabilité de précipitation et l'affiche en haut à droite."""
+        if not self.municipality or not self.weather_api_key:
+            return
+
+        try:
+            # 1) Température actuelle
+            params = {
+                "q": self.municipality,
+                "units": "metric",
+                "appid": self.weather_api_key
+            }
+            resp = requests.get(
+                "http://api.openweathermap.org/data/2.5/weather",
+                params=params, timeout=5
+            )
+            resp.raise_for_status()
+            data = resp.json()
+            temp = data["main"]["temp"]
+            temp_text = f"{self.municipality} : {temp:.1f}°C"
+
+            # 2) Prévision 5j/3h (pop disponible dans le premier créneau)
+            params_forecast = params.copy()
+            params_forecast["cnt"] = 1  # on ne récupère que le tout premier créneau
+            resp_f = requests.get(
+                "http://api.openweathermap.org/data/2.5/forecast",
+                params=params_forecast, timeout=5
+            )
+            resp_f.raise_for_status()
+            fdata = resp_f.json()
+            slot = fdata["list"][0]
+            pop = slot.get("pop", 0) * 100  # fraction → pourcentage
+            weather_main = slot["weather"][0]["main"].lower()
+            precip_text = f"{pop:.0f}% de probabilité de {weather_main}"
+
+        except Exception as e:
+            temp_text = "Météo N/A"
+            precip_text = ""  # on n'affiche rien si erreur
+
+        # 3) Affichage
+        x = self.screen_width - 10
+        y = 10
+        # Température
+        self.canvas.create_text(
+            x, y,
+            text=temp_text,
+            font=("Helvetica", 32),
+            anchor="ne"
+        )
+        # Probabilité de précipitation juste en dessous
+        if precip_text:
+            self.canvas.create_text(
+                x, y + 36,  # 36px sous la première ligne (ajustez si besoin)
+                text=precip_text,
+                font=("Helvetica", 16),
+                anchor="ne"
+            )
 
     def run(self):
         self.canvas.create_text(
             self.screen_width // 2, 50, text=self.title, font=("Helvetica", 48), anchor="center"
         )
+
+        def run(self):
+            # Titre (existant)
+            self.canvas.create_text(
+                self.screen_width // 2, 50,
+                text=self.title,
+                font=("Helvetica", 48),
+                anchor="center"
+            )
+
+        self.display_weather()
 
         # Création de la timeline
         self.canvas.create_line(self.bar_start_x, self.bar_y, self.bar_end_x, self.bar_y, fill="black", width=5)

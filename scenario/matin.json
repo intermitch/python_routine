@@ -7,25 +7,29 @@
     {"name": "Dahlia"}
   ],
   "indicators": [
-    {"time": "6:00", "icon": "petite_fille_baille.webp"},
-    {"time": "6:50", "icon": "petite_fille_levee.webp"},
-    {"time": "7:00", "icon": "petite_fille.png"},
-    {"time": "7:11", "icon": "petite_fille_ecole.png"},
-    {"time": "7:30", "icon": "petite_fille_hiver.webp"},
-    {"time": "7:40", "icon": "fille_autobus.webp"}
+    {"time": "6:00", "icon": "indicators/girl/fille_baille.webp"},
+    {"time": "6:50", "icon": "indicators/girl/fille_levee.webp"},
+    {"time": "7:00", "icon": "indicators/girl/fille.png"},
+    {"time": "7:11", "icon": "indicators/girl/fille_ecole.png"},
+    {"time": "7:30", "icon": "indicators/girl/fille_hiver.webp"},
+    {"time": "7:40", "icon": "indicators/girl/fille_autobus.webp"}
   ],
   "events": [
-    {"time": "6:50", "icon": "reveil.png"},
-    {"time": "7:00", "icon": "dejeuner.png"},
-    {"time": "7:10", "icon": "robe.png"},
-    {"time": "7:12", "icon": "brosse_dent.png"},
-    {"time": "7:14", "icon": "brosse.png"},
-    {"time": "7:25", "icon": "sac_ecole.png"},
-    {"time": "7:30", "icon": "mitaine.png"},
-    {"time": "7:40", "icon": "bus.webp"}
+    {"time": "6:50", "icon": "events/reveil.png"},
+    {"time": "7:00", "icon": "events/dejeuner.png"},
+    {"time": "7:10", "icon": "events/robe.png"},
+    {"time": "7:12", "icon": "events/brosse_dent.png"},
+    {"time": "7:14", "icon": "events/brosse.png"},
+    {"time": "7:25", "icon": "events/sac_ecole.png"},
+    {"time": "7:30", "icon": "events/mitaine.png"},
+    {"time": "7:40", "icon": "events/bus.webp"}
   ],
   "sounds": [
     {"type": "button", "file": "click-47609.mp3"},
     {"type": "completion", "file": "applause-cheer.mp3"}
-  ]
+  ],
+  "weather": {
+    "municipality": "Alma",
+    "api_key": "536187e835affec4f0399b0a7a815f9d"
+  }
 }

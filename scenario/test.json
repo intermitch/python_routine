@@ -1,35 +1,35 @@
 {
   "title": "Routine de test",
-  "start_hour": "10:00",
-  "end_hour": "13:00",
+  "start_hour": "6:30",
+  "end_hour": "7:45",
   "users": [
     {"name": "Olivia"},
     {"name": "Dahlia"}
   ],
   "indicators": [
-    {"time": "20:00", "icon": "petite_fille_baille.webp"}
+    {"time": "6:00", "icon": "indicators/girl/fille_baille.webp"},
+    {"time": "6:50", "icon": "indicators/girl/fille_levee.webp"},
+    {"time": "7:00", "icon": "indicators/girl/fille_dejeuner.png"},
+    {"time": "7:11", "icon": "indicators/girl/fille_ecole.png"},
+    {"time": "7:30", "icon": "indicators/girl/fille_printemps.webp"},
+    {"time": "7:40", "icon": "indicators/girl/fille_autobus.png"}
   ],
   "events": [
-    {"time": "10:24", "icon": "brosse.png"},
-    {"time": "10:25", "icon": "sac_ecole.png"},
-    {"time": "11:40", "icon": "mitaine.png"},
-    {"time": "11:50", "icon": "bus.webp"}
-  ],
-  "daily_events": [
-    {"day": "Monday", "icon": "daily_events/mitaine.png", "description": "Activité pour lundi"},
-    {"day": "Tuesday", "icon": "daily_events/mitaine.png", "description": "Activité pour mardi"},
-    {"day": "Wednesday", "icon": "daily_events/mitaine.png", "description": "Activité pour mercredi"},
-    {"day": "Thursday", "icon": "daily_events/menage_chambre.webp", "description": "Ménage de la chambre"},
-    {"day": "Friday", "icon": "daily_events/mitaine.png", "description": "Activité pour vendredi"},
-    {"day": "Saturday", "icon": "daily_events/mitaine.png", "description": "Activité pour samedi"},
-    {"day": "Sunday", "icon": "daily_events/mitaine.png", "description": "Activité pour dimanche"}
-  ],
-  "daily_events_random": [
-    {"icon": "daily_events/bricolage.webp", "description": "Faire un bricolage"},
-    {"icon": "daily_events/deguisement.webp", "description": "Vous déguiser"}
+    {"time": "6:50", "icon": "events/reveil.png"},
+    {"time": "7:00", "icon": "events/dejeuner.png"},
+    {"time": "7:10", "icon": "events/robe.png"},
+    {"time": "7:12", "icon": "events/brosse_dent.png"},
+    {"time": "7:14", "icon": "events/brosse.png"},
+    {"time": "7:25", "icon": "events/sac_ecole.png"},
+    {"time": "7:30", "icon": "events/chapeau_bottes.png"},
+    {"time": "7:40", "icon": "events/bus.webp"}
   ],
   "sounds": [
     {"type": "button", "file": "click-47609.mp3"},
     {"type": "completion", "file": "applause-cheer.mp3"}
-  ]
+  ],
+  "weather": {
+    "municipality": "Alma,CA",
+    "api_key": "536187e835affec4f0399b0a7a815f9d"
+  }
 }
