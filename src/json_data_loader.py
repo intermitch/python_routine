@@ -51,6 +51,8 @@ class JsonDataLoader:
         title = data.get("title", "Titre")
         start_hour = data.get("start_hour", "00:00")
         end_hour = data.get("end_hour", "23:59")
+        lon = data.get("lon", {})
+        lat = data.get("lat", {})
         weather_config = data.get("weather", {})
 
         return {
@@ -63,5 +65,7 @@ class JsonDataLoader:
             "indicators": indicators_data,
             "daily_events": daily_events,
             "daily_events_random": daily_events_random,
-            "weather": weather_config
+            "lat": lat,
+            "lon": lon,
+            "weather_config": weather_config
         }
