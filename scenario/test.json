@@ -1,28 +1,28 @@
 {
   "title": "Routine de test",
-  "start_hour": "6:30",
-  "end_hour": "7:45",
+  "start_hour": "14:30",
+  "end_hour": "15:45",
   "users": [
     {"name": "Olivia"},
     {"name": "Dahlia"}
   ],
   "indicators": [
-    {"time": "6:00", "icon": "indicators/girl/fille_baille.webp"},
-    {"time": "6:50", "icon": "indicators/girl/fille_levee.webp"},
-    {"time": "7:00", "icon": "indicators/girl/fille_dejeuner.png"},
-    {"time": "7:11", "icon": "indicators/girl/fille_ecole.png"},
-    {"time": "7:30", "icon": "indicators/girl/fille_printemps.webp"},
-    {"time": "7:40", "icon": "indicators/girl/fille_autobus.png"}
+    {"time": "14:35", "icon": "indicators/girl/fille_baille.webp"},
+    {"time": "14:40", "icon": "indicators/girl/fille_levee.webp"},
+    {"time": "14:45", "icon": "indicators/girl/fille_dejeuner.png"},
+    {"time": "14:51", "icon": "indicators/girl/fille_ecole.png"},
+    {"time": "15:30", "icon": "indicators/girl/fille_printemps.webp"},
+    {"time": "15:40", "icon": "indicators/girl/fille_autobus.png"}
   ],
   "events": [
-    {"time": "6:50", "icon": "events/reveil.png"},
-    {"time": "7:00", "icon": "events/dejeuner.png"},
-    {"time": "7:10", "icon": "events/robe.png"},
-    {"time": "7:12", "icon": "events/brosse_dent.png"},
-    {"time": "7:14", "icon": "events/brosse.png"},
-    {"time": "7:25", "icon": "events/sac_ecole.png"},
-    {"time": "7:30", "icon": "events/chapeau_bottes.png"},
-    {"time": "7:40", "icon": "events/bus.webp"}
+    {"time": "14:00", "icon": "events/reveil.png"},
+    {"time": "14:30", "icon": "events/dejeuner.png"},
+    {"time": "14:40", "icon": "events/robe.png"},
+    {"time": "14:52", "icon": "events/brosse_dent.png"},
+    {"time": "15:14", "icon": "events/brosse.png"},
+    {"time": "15:25", "icon": "events/sac_ecole.png"},
+    {"time": "15:30", "icon": "events/chapeau_bottes.png"},
+    {"time": "15:40", "icon": "events/bus.webp"}
   ],
   "sounds": [
     {"type": "button", "file": "click-47609.mp3"},

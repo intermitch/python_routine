@@ -4,6 +4,7 @@ import tkinter as tk
 import datetime
 from pathlib import Path
 import requests
+import locale
 
 from pygame import mixer
 
@@ -74,15 +75,30 @@ class TimelineApp:
         self.canvas.create_text(
             self.screen_width // 2, 50, text=self.title, font=("Helvetica", 48), anchor="center"
         )
+        # — optionnel : forcer la locale française pour le jour de la semaine
+        try:
+            locale.setlocale(locale.LC_TIME, "fr_FR.UTF-8")
+        except locale.Error:
+            # pas de locale dispo, on restera en anglais
+            pass
 
-        def run(self):
-            # Titre (existant)
-            self.canvas.create_text(
-                self.screen_width // 2, 50,
-                text=self.title,
-                font=("Helvetica", 48),
-                anchor="center"
-            )
+        # 1) On récupère le jour de la semaine
+        day_name = datetime.datetime.now().strftime("%A")
+        # 2) On l'affiche en haut gauche, 10px du bord
+        self.canvas.create_text(
+            10, 10,
+            text=day_name,
+            font=("Helvetica", 24),
+            anchor="nw"
+        )
+
+        # Titre (existant)
+        self.canvas.create_text(
+            self.screen_width // 2, 50,
+            text=self.title,
+            font=("Helvetica", 48),
+            anchor="center"
+        )
 
         self.addon.display_weather()
 
