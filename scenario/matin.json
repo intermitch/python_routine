@@ -29,9 +29,7 @@
     {"type": "completion", "file": "applause-cheer.mp3"}
   ],
   "weather": {
-    "municipality": "Alma",
-    "lat": 48.5333,
-    "lon": -71.65,
-    "api_key": "jUz2MMu7PVsg2Aw0jiQ5uDUhb"
+    "municipality": "Alma,CA",
+    "api_key": "536187e835affec4f0399b0a7a815f9d"
   }
 }
