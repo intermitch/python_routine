@@ -7,12 +7,12 @@
     {"name": "Dahlia"}
   ],
   "indicators": [
-    {"time": "6:00", "icon": "indicators/girl/fille_baille.webp"},
+    {"time": "6:00", "icon": "indicators/girl/fille_baille_panda.png"},
     {"time": "6:50", "icon": "indicators/girl/fille_levee.webp"},
-    {"time": "7:00", "icon": "indicators/girl/fille.png"},
-    {"time": "7:11", "icon": "indicators/girl/fille_ecole.png"},
-    {"time": "7:30", "icon": "indicators/girl/fille_hiver.webp"},
-    {"time": "7:40", "icon": "indicators/girl/fille_autobus.webp"}
+    {"time": "7:00", "icon": "indicators/girl/fille_dejeuner_nutella.png"},
+    {"time": "7:11", "icon": "indicators/girl/fille_ecole_decontracte.png"},
+    {"time": "7:30", "icon": "indicators/girl/fille_automne.png"},
+    {"time": "7:40", "icon": "indicators/girl/fille_autobus_automne.png"}
   ],
   "events": [
     {"time": "6:50", "icon": "events/reveil.png"},
@@ -21,7 +21,7 @@
     {"time": "7:12", "icon": "events/brosse_dent.png"},
     {"time": "7:14", "icon": "events/brosse.png"},
     {"time": "7:25", "icon": "events/sac_ecole.png"},
-    {"time": "7:30", "icon": "events/mitaine.png"},
+    {"time": "7:30", "icon": "events/vetements_automne_fille.png"},
     {"time": "7:40", "icon": "events/bus.webp"}
   ],
   "sounds": [
