@@ -1,0 +1,20 @@
+{
+  "01d": "icons8-sun-100.png",
+  "01n": "icons8-night-100.png",
+  "02d": "icons8-partly-cloudy-day-100.png",
+  "02n": "icons8-night-100-2.png",
+  "03d": "icons8-cloud-100.png",
+  "03n": "icons8-clouds-100.png",
+  "04d": "icons8-clouds-100.png",
+  "04n": "icons8-clouds-100.png",
+  "09d": "icons8-rain-100.png",
+  "09n": "icons8-rainy-night-100.png",
+  "10d": "icons8-rain-100-2.png",
+  "10n": "icons8-rainy-night-100.png",
+  "11d": "icons8-storm-100.png",
+  "11n": "icons8-storm-100-2.png",
+  "13d": "icons8-snow-100.png",
+  "13n": "icons8-snow-storm-100.png",
+  "50d": "icons8-fog-100.png",
+  "50n": "icons8-fog-100-2.png"
+}

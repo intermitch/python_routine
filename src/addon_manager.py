@@ -1,13 +1,18 @@
 # src/addon_manager.py
 import math
-from io import BytesIO
+import os
+import json
 
 import requests
 from PIL import Image, ImageTk
 
+
+# Chargement du mapping OWM → icône locale
+with open("images/addon/weather_icon_map.json", "r", encoding="utf-8") as f:
+    ICON_MAP = json.load(f)
+
 OWM_WEATHER = "http://api.openweathermap.org/data/2.5/weather"
 OWM_FORECAST = "http://api.openweathermap.org/data/2.5/forecast"
-OWM_ICON = "http://openweathermap.org/img/wn/{code}@2x.png"
 
 
 class AddOnManager:
@@ -16,11 +21,6 @@ class AddOnManager:
     """
 
     def __init__(self, canvas, screen_width, weather_config):
-        """
-        :param canvas: instance de tkinter.Canvas
-        :param screen_width: largeur de la fenêtre (px)
-        :param weather_config: dict avec "municipality" et "api_key"
-        """
         self.canvas = canvas
         self.screen_width = screen_width
         self.municipality = weather_config.get("municipality", "")
@@ -35,7 +35,7 @@ class AddOnManager:
         """
         Affiche en haut à droite:
           - Température actuelle
-          - Icône météo (toujours affichée)
+          - Icône météo (toujours affichée, depuis le pack local)
           - % de précipitations uniquement si pop > 0
         """
         if not self.municipality or not self.api_key:
@@ -58,18 +58,17 @@ class AddOnManager:
             fc = resp_fc.json()
             slot = (fc.get("list") or [{}])[0]
 
-            pop = float(slot.get("pop", 0.0)) * 100.0  # %
+            pop = float(slot.get("pop", 0.0)) * 100.0
             w0 = (slot.get("weather") or [{}])[0]
             icon_code = w0.get("icon", "01d")
-            icon_url = OWM_ICON.format(code=icon_code)
 
+            # Texte uniquement si pop > 0
             precip_text = f"{pop:.0f}%" if pop > 0 else None
-            precip_icon_url = icon_url
 
         except Exception:
             temp_text = "--°C"
             precip_text = None
-            precip_icon_url = OWM_ICON.format(code="01d")
+            icon_code = "01d"
 
         # --- Dessin ---
         x, y = self.screen_width - 10, 10
@@ -84,27 +83,26 @@ class AddOnManager:
             tags=("weather_block",),
         )
 
-        # Icône météo (toujours affichée)
-        if precip_icon_url:
+        # Icône météo locale
+        icon_file = ICON_MAP.get(icon_code, ICON_MAP.get("01d"))
+        if icon_file:
+            icon_path = os.path.join("images/addon/weather", icon_file)
             try:
-                ic = requests.get(precip_icon_url, timeout=5)
-                ic.raise_for_status()
-                if ic.headers.get("Content-Type", "").startswith("image"):
-                    img = Image.open(BytesIO(ic.content))
-                    self._precip_icon = ImageTk.PhotoImage(img)
-                    self.canvas.create_image(
-                        x - 50, y + 30,
-                        image=self._precip_icon,
-                        anchor="n",
-                        tags=("weather_block",),
-                    )
-            except Exception:
-                pass
+                img = Image.open(icon_path)
+                self._precip_icon = ImageTk.PhotoImage(img)
+                self.canvas.create_image(
+                    x - 50, y + 50,
+                    image=self._precip_icon,
+                    anchor="n",
+                    tags=("weather_block",),
+                )
+            except Exception as e:
+                print(f"Erreur chargement icône {icon_path}: {e}")
 
-        # Texte des précipitations uniquement si pop > 0
+        # Texte uniquement si pop > 0
         if precip_text:
             self.canvas.create_text(
-                x - 50, y + 120,
+                x - 50, y + 160,
                 text=precip_text,
                 font=("Helvetica", 16),
                 anchor="n",
