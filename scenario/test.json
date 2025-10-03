@@ -1,35 +1,35 @@
 {
   "title": "Routine de test",
-  "start_hour": "14:30",
-  "end_hour": "15:45",
+  "start_hour": "9:30",
+  "end_hour": "11:45",
   "users": [
     {"name": "Olivia"},
     {"name": "Dahlia"}
   ],
   "indicators": [
-    {"time": "14:35", "icon": "indicators/girl/fille_baille.webp"},
-    {"time": "14:40", "icon": "indicators/girl/fille_levee.webp"},
-    {"time": "14:45", "icon": "indicators/girl/fille_dejeuner.png"},
-    {"time": "14:51", "icon": "indicators/girl/fille_ecole.png"},
-    {"time": "15:30", "icon": "indicators/girl/fille_printemps.png"},
-    {"time": "15:40", "icon": "indicators/girl/fille_autobus.png"}
+    {"time": "10:00", "icon": "indicators/girl/fille_baille_panda.png"},
+    {"time": "10:50", "icon": "indicators/girl/fille_levee.webp"},
+    {"time": "10:00", "icon": "indicators/girl/fille_dejeuner_nutella.png"},
+    {"time": "10:11", "icon": "indicators/girl/fille_ecole_decontracte.png"},
+    {"time": "10:30", "icon": "indicators/girl/fille_automne.png"},
+    {"time": "10:40", "icon": "indicators/girl/fille_autobus_automne.png"}
   ],
   "events": [
-    {"time": "14:00", "icon": "events/reveil.png"},
-    {"time": "14:30", "icon": "events/dejeuner.png"},
-    {"time": "14:40", "icon": "events/robe.png"},
-    {"time": "14:52", "icon": "events/brosse_dent.png"},
-    {"time": "15:14", "icon": "events/brosse.png"},
-    {"time": "15:25", "icon": "events/sac_ecole.png"},
-    {"time": "15:30", "icon": "events/chapeau_bottes.png"},
-    {"time": "15:40", "icon": "events/bus.webp"}
+    {"time": "10:00", "icon": "events/reveil.png"},
+    {"time": "10:30", "icon": "events/dejeuner.png"},
+    {"time": "10:40", "icon": "events/robe.png"},
+    {"time": "10:52", "icon": "events/brosse_dent.png"},
+    {"time": "11:14", "icon": "events/brosse.png"},
+    {"time": "11:25", "icon": "events/sac_ecole.png"},
+    {"time": "11:30", "icon": "events/chapeau_bottes.png"},
+    {"time": "11:40", "icon": "events/bus.webp"}
   ],
   "sounds": [
     {"type": "button", "file": "click-47609.mp3"},
     {"type": "completion", "file": "applause-cheer.mp3"}
   ],
   "weather": {
-    "municipality": "Alma,CA",
+    "municipality": "Alma, CA",
     "api_key": "536187e835affec4f0399b0a7a815f9d"
   }
 }
