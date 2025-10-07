@@ -1,14 +1,18 @@
 # src/addon_manager.py
 import math
 import os
+from pathlib import Path
 import json
 
 import requests
 from PIL import Image, ImageTk
 
+# Dossier du script courant
+BASE_DIR = Path(__file__).resolve().parent
+ICON_MAP_PATH = BASE_DIR.parent / "images" / "addon" / "weather_icon_map.json"
 
-# Chargement du mapping OWM → icône locale
-with open("images/addon/weather_icon_map.json", "r", encoding="utf-8") as f:
+
+with open(ICON_MAP_PATH, "r", encoding="utf-8") as f:
     ICON_MAP = json.load(f)
 
 OWM_WEATHER = "http://api.openweathermap.org/data/2.5/weather"
