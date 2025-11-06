@@ -1,3 +1,4 @@
+# Python 3.12
 pip install pillow
 pip install pygame
 pip install requests
