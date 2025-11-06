@@ -29,7 +29,7 @@
     {"type": "completion", "file": "applause-cheer.mp3"}
   ],
   "weather": {
-    "municipality": "Alma, CA",
+    "municipality": "alma, ca",
     "api_key": "536187e835affec4f0399b0a7a815f9d"
   }
 }
